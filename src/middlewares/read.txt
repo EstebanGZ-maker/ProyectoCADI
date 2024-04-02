@@ -1,0 +1,2 @@
+Se usarán para poder decirle que rutas estan protegidas por usuarios autenticados 
+Quien puede o no pedir información al back-end autenticando users

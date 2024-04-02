@@ -1,0 +1,2 @@
+Para crear las funciones que se van a ejecutar cuando se visite una URL 
+Ex: Si se visita la URL login el codigo que se usará estará aquí

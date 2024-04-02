@@ -1,0 +1,2 @@
+Codigo que se re importará varias veces 
+Ex: Una función para generar tokens para el login and register/sing up 

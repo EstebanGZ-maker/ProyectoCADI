@@ -1,0 +1,1 @@
+Se guardarán los modelos de la base de datos osea un "schema"
