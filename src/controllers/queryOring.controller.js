@@ -1,6 +1,7 @@
 import test from "node:test";
 import Orings  from "../models/oring.model.js";
 
+// TO DO = Revisar como se llaman las solicitudes, si es con "OringsData" o con  "Orings".
 export const getQueryOrings = async (req, res) => {
 
     const queryOrings = await Orings.find()
