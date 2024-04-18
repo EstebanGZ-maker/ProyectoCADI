@@ -25,7 +25,6 @@ export const createQueryOring = async (req, res) => {
     res.json(saveOring);
 };
 
-//modificado reciente 04-01
 export const getQueryOring = async (req, res) => {
     
     try {
@@ -67,7 +66,7 @@ export const updateQueryOring = async (req, res) => {
     const queryOring = await Orings.findByIdAndUpdate(req.params.id, req.body, {
         new: true
     })
-    if (!queryOring) return res.status(404).json({message: "Consulta no encontrada"})
+    if (!queryOring) return res.status(404).json({message: "Consulta actualizada"})
     res.json(queryOring)
 
 };

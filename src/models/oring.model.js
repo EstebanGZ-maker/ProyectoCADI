@@ -1,6 +1,6 @@
 import { Double } from "mongodb";
 import mongoose from "mongoose"
-import connectDBtest  from "../DataBases/db.test1.js";
+
 
 //Esquema de como se van a guardar los datos de los productos en la DB
 const OringsSchema = new mongoose.Schema({

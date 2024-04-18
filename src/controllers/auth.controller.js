@@ -8,6 +8,11 @@ export const register = async (req, res) => {
    const {email, password , username } = req.body
 
   try {
+
+    const userFound = await User.findOne({email}); 
+    if (userFound)
+      return res.status(400).json(["El correo ya esta registrado"]); 
+
     const passwordHash = await bcrypt.hash(password, 10)
 
     const newUser = new User({
@@ -39,18 +44,22 @@ export const login = async (req, res) => {
 
     const {email, password} = req.body
  
-   try {
-    const userFound = await User.findOne({ email });
-    if (!userFound) return res.status(400).json({message: "Use not found"});
+    try {
 
-    const isMatch = await bcrypt.compare(password, userFound.password); 
-    if (!isMatch) return res.status(400).json({ message: "Correo y/o Contraseña incorrecto " });
- 
-    const token = await createAccesToken({id: userFound._id})
+      const userFound = await User.findOne({ email });
+      if (!userFound)
+        return res.status(400).json({message: "Use not found"});
+
+      const isMatch = await bcrypt.compare(password, userFound.password); 
+      if (!isMatch) {
+        return res.status(401).json({ message: "Correo y/o Contraseña incorrecto " })
+      };
+
+    const token = await createAccesToken({ id: userFound._id, username: userFound.username }); 
      
      //lo que va a responder del usuario 
-         res.cookie("token", token)
-         res.json({
+    res.cookie("token", token, {httOnly : true});
+    res.json({
          message: "Sesión iniciada correctamente",
          id: userFound._id,
          username: userFound.username,
@@ -60,8 +69,9 @@ export const login = async (req, res) => {
         }) 
             
    }catch (error) {
-    res.status(500).json({message: error.message});
+    res.status(500).json({message: error.message });
    }
+
  };
  
 //LOGOUT 
