@@ -1,10 +1,11 @@
 import { Double } from "mongodb";
 import mongoose from "mongoose"
+import { type } from "os";
 
 
 //Esquema de como se van a guardar los datos de los productos en la DB
 const OringsSchema = new mongoose.Schema({
-    IDcadi:{
+    ID:{
         type: String,
         required: true,
         unique: true
@@ -29,6 +30,20 @@ const OringsSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    PesoGr: {
+        type: Number,
+    },
+    PrecioProducir: {
+        type: Number,
+    },
+    PrecioVenta: {
+        type: Number,
+    },
+    IdPlano: {
+        type: String,
+        required: true,
+        unique: true
+    },
     Idmolde: {
         type: String,
         required: true,
@@ -43,6 +58,12 @@ const OringsSchema = new mongoose.Schema({
     Nplacas: {
         type: String
     },
+    Tdistribucion: {
+        type: String
+    },
+    Patin: {
+        type: String
+    },
     Tmaquina: {
         type: String
     },
@@ -52,6 +73,8 @@ const OringsSchema = new mongoose.Schema({
     TProceso: {
         type: String
     },
+}, {
+    timestamps: true
 });
 
 //Esto es para interactuar con la DB y los metodos. 

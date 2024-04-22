@@ -98,8 +98,7 @@ export const profile = async (req, res) => {
     
 }
 
-//REGISTRO DE PRODUCTOS
-export const registerProducts = (req, res) => res.send("registerProducts");
+
 
 
  

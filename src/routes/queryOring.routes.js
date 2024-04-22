@@ -1,15 +1,16 @@
 import { Router } from "express";
 import { authRequired } from "../middlewares/validateToken.js";
 import { getQueryOring, getQueryOrings, createQueryOring, updateQueryOring, deleteQueryOring } from "../controllers/queryOring.controller.js";
-import { get } from "https";
+import { validateSchema } from "../middlewares/validator.middleware.js";
+import { createProductsSchema, queryProductsSchema } from "../schemas/oring.schema.js";
 
 const router = Router()
 
-router.get("/queryOring", authRequired, getQueryOrings)
+router.get("/queryOring/id", authRequired , getQueryOrings)
 
-router.get("/queryOring/:id", authRequired, getQueryOring)
+router.post("/queryOring", authRequired, validateSchema(createProductsSchema), createQueryOring )
 
-router.post("/queryOring", authRequired, createQueryOring )
+router.get("/queryOring/query", authRequired, validateSchema(queryProductsSchema), getQueryOring)
 
 router.delete("/queryOring/:id", authRequired, deleteQueryOring )
 
