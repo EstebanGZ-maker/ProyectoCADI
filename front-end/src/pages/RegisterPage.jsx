@@ -5,16 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 
-
 function RegisterPage() {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const {signup, isAuthenticated, errors: registerErrors  } = useAuth(); 
+    const {signup ,isAuthenticated, errors: registerErrors  } = useAuth(); 
     const navigate = useNavigate(); 
     
-    const onSubmit = async ( value ) => {
-      await signup(value)  
-      console.log(value); 
-    };   
+    const onSubmit = handleSubmit(async (values) => {
+      signup(values); 
+    });   
     
     useEffect(() => {
       if (isAuthenticated) navigate("/queryOring"); 
@@ -27,7 +25,7 @@ function RegisterPage() {
     <div className=" bg-zinc-800 max-w-md p-10 rounded-md " >
       
       {registerErrors.map((error , i) => (
-        <div className=" bg-red-500 p-2 text-white" key={i} >
+        <div className=" bg-red-500 p-2 text-white text-center" key={i} >
           {error}
         </div>   
       )) 
@@ -35,7 +33,7 @@ function RegisterPage() {
         
         <h1 className=" text-white text-2xl font-bold text-center"  > Registro de usuarios </h1>
 
-      <form onSubmit = {handleSubmit(onSubmit)} >
+      <form onSubmit = {onSubmit}>
         <input type="text" { ...register(`username`, { required: true })}
             className=" w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-3 "
             placeholder="Username"

@@ -13,15 +13,15 @@ function LoginPage() {
 
   return (
     <div className=" flex h-screen items-center justify-center " >
-
-        {signinErrors.map(( error , i) => (
-            <div className=" bg-red-500 p-2 text-white" key={i} >
-              {error}
-            </div>))
-        }
        
         <div className="bg-zinc-800 max-w-md w-full p-10 rounded-md " >
 
+        {signinErrors.map(( error , i) => (
+            <div className=" bg-red-500 p-2 text-white text-center my-3 " key={i} >
+              {error}
+            </div>))
+        }
+        
         <h1 className=" text-white text-2xl font-bold text-center"  > Login </h1> 
 
         <form onSubmit = {onSubmit} > 

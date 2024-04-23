@@ -18,14 +18,13 @@ export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated ] = useState(false); 
     const [errors, setErros] = useState([]); 
 
-
     const signup = async (user) => {
         try {
-            
             const res = await registerRequest(user);
-        console.log(res.data);(res.data);
-        setUser(res.data);
-        setIsAuthenticated(true);
+            console.log(res.data); 
+            setUser(res.data)
+            setIsAuthenticated(true)
+            
 
         } catch (error) {
             setErros(error.response.data);  
@@ -47,20 +46,21 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         if (errors.length > 0) {
             const timer = setTimeout(() => {
-                set([])
-            }, 8000)
+                setErros([])
+            }, 6000)
             return () => clearTimeout(timer)
         }
     }, [errors]); 
 
-    return (<AuthContext.Provider 
+    return (
+    <AuthContext.Provider 
     value={{ 
         signup,
         signin,
         user,
         isAuthenticated,
         errors
-    }}>{ children }
+    }}>{children}
     </AuthContext.Provider>
     ); 
 };
