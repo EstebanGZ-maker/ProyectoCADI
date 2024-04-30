@@ -1,6 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import { registerRequest, loginRequest } from "../api/auth.js";
-import { set } from "mongoose";
+import { registerRequest, loginRequest, verifyTokenRequet } from "../api/auth.js";
+import Cookies from "js-cookie";
 
 
 export const AuthContext = createContext();
@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [isAuthenticated, setIsAuthenticated ] = useState(false); 
     const [errors, setErros] = useState([]); 
+    const [loading, setLoading ] = useState(true); 
 
     const signup = async (user) => {
         try {
@@ -25,7 +26,6 @@ export const AuthProvider = ({ children }) => {
             setUser(res.data)
             setIsAuthenticated(true)
             
-
         } catch (error) {
             setErros(error.response.data);  
         } 
@@ -35,6 +35,8 @@ export const AuthProvider = ({ children }) => {
         try {
             const res = await loginRequest(user)
             console.log(res)
+            setIsAuthenticated(true)
+            setUser(res.data)
         } catch (error) {
             if (Array.isArray(error.response.data)) {
                 return setErros(error.response.data)
@@ -52,6 +54,37 @@ export const AuthProvider = ({ children }) => {
         }
     }, [errors]); 
 
+    useEffect(() => {
+       async function checkLogin () {
+        const cookies = Cookies.get();
+
+        if(!cookies.token){
+            setIsAuthenticated(false); 
+            setLoading(false); 
+            return setUser(null); 
+        }
+
+            try {
+                const res = await verifyTokenRequet(cookies.token); 
+                if (!res.data) {
+                    setIsAuthenticated(false);
+                    setLoading(false); 
+                    return;    
+                } 
+    
+                setIsAuthenticated(true); 
+                setUser(res.data);
+                setLoading(false);  
+            } catch (error) {
+                setIsAuthenticated(false); 
+                setUser(null); 
+                setLoading(false); 
+            }
+             
+        }
+       checkLogin(); 
+}, []); 
+
     return (
     <AuthContext.Provider 
     value={{ 
@@ -59,7 +92,8 @@ export const AuthProvider = ({ children }) => {
         signin,
         user,
         isAuthenticated,
-        errors
+        errors, 
+        loading
     }}>{children}
     </AuthContext.Provider>
     ); 
