@@ -15,13 +15,10 @@ export const useQueryOring = () => {
 
 export const QueryOringProvider = ({children}) => {
     const [queryOring, setQueryOring] = useState([]); 
+    const [medidasOring, setMedidasOring ] = useState([]); 
     const [errors, setErrors ] = useState([]); 
 
-//Obtenedor de la consulta
-    const getQueryOring = async () => {
-        const res = await getOringsRequest();
-        console.log(res)
-    }
+
 //Creador de la consulta
     const createQueryOring = async (queryOring) => {
 
@@ -32,6 +29,21 @@ export const QueryOringProvider = ({children}) => {
 
         } catch (error) {
             console.error(errors); 
+            setErrors(error.response.data)
+        }
+    }
+
+    //Obtenedor de la consulta
+    const getQueryOring = async (medidasOring) => {
+
+        try {
+            const res = await getOringsRequest(medidasOring)
+            console.log(res.data); 
+            setMedidasOring(res.data); 
+
+        } catch (error) {
+            console.error(errors);
+            setErros([error.response.data.message])
         }
     }
 
@@ -59,9 +71,10 @@ export const QueryOringProvider = ({children}) => {
         < QueryOringContext.Provider
             value = {{
                 queryOring,
+                medidasOring,
                 createQueryOring,
+                getQueryOring,
                 errors, 
-                getQueryOring
                 /* handleChange, */  
             }}
         >    

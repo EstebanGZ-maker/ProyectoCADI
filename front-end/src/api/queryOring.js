@@ -1,6 +1,6 @@
 import axios from "./axios.js";
 
-export const getOringsRequest = (Espesor, Dinterno, Dexterno) => axios.get(`/queryOring/${Espesor, Dinterno, Dexterno}`);
+export const getOringsRequest = (medidasOring) => axios.get(`/queryOring/query`, medidasOring);
 
 export const createOringsRequest = (queryOring) => axios.post(`/queryOring`, queryOring); 
 

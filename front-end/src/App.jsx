@@ -4,7 +4,7 @@ import { AuthProvider } from "./context/AuthContext.jsx";
 //import pages
 import LoginPage from "./pages/LoginPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx"; 
-import OringPage  from "./pages/OringPage.jsx";
+import OringPage  from "./pages/OrinPage.jsx";
 import CreateOringPage from "./pages/CreateOringPage.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
@@ -24,8 +24,8 @@ function App() {
         <Route path="/register" element={ <RegisterPage/> } />  
   
       <Route element = {< ProtectedRoute />} >
-        <Route path="/queryOring" element={ < OringPage /> } /> 
-        <Route path="/add-oring" element={ < CreateOringPage /> } />  
+        <Route path="/queryOring/query" element={ < OringPage /> } /> 
+        <Route path="/queryOring" element={ < CreateOringPage /> } />  
         <Route path="/profile" element={ < ProfilePage /> } /> 
       </Route>  
     
