@@ -1,29 +1,33 @@
-import { React } from 'react'
+import { React, useEffect } from 'react'
 import { useForm } from "react-hook-form";
 import { useQueryOring } from "../context/QueryContext.jsx";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+/* import { useNavigate } from "react-router-dom"; */
 
 
 function QueryOringPage() {
 
   const{ register, handleSubmit, formState: {errors}, } = useForm(); 
-  const { getQueryOring, errors: getQueryOringErrors } = useQueryOring(); 
-  const navigate = useNavigate()
+  const { getQueryOring, medidasOring,  errors: getQueryOringErrors } = useQueryOring(); 
+  /* const navigate = useNavigate() */
+
+  useEffect(() => {
+    getQueryOring()
+  }, [])
 
   const onSubmit = handleSubmit((data) => {
 
-    
       data.Espesor = parseFloat(data.Espesor);
       data.Dexterno = parseFloat(data.Dexterno);
       data.Dinterno = parseFloat(data.Dinterno);
    
       getQueryOring(data); 
-      //navigate("/viewQueryOring")
+      /* navigate("/viewQueryOring") */
   
   }); 
   
   return (
+
     <div className="  flex h-screen items-center justify-center " >
 
         <div className=' bg-zinc-800 max-w-md w-full p-10 rounded-md ' >
@@ -81,6 +85,37 @@ function QueryOringPage() {
 
           </form>
         </div>
+
+            <div className=' bg-zinc-800 max-w-md w-full p-10 rounded-md ' >
+              {
+                medidasOring.map( medidasOring => (
+                  <div className=" w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-3" > 
+                      <h1>Resultado de la consulta</h1>
+                      <p>{medidasOring.CodigoCompu}</p>
+                      <p>{medidasOring.DESCRIPCIÓN}</p>
+                      <p>{medidasOring.Espesor}</p>
+                      <p>{medidasOring.Dexterno}</p>
+                      <p>{medidasOring.Dinterno}</p>
+                      <p>{medidasOring.ID}</p>
+                       <p>{medidasOring.Idmolde}</p>
+                      <p>{medidasOring.Medidas}</p>
+                      <p>{medidasOring.Mtamaño}</p>
+                      <p>{medidasOring.Ncavidades}</p>
+                      <p>{medidasOring.Nplacas}</p>
+                      <p>{medidasOring.Patin}</p>
+                      <p>{medidasOring.Pesogr}</p>
+                      <p>{medidasOring.PrecioProducir}</p>
+                      <p>{medidasOring.TMaquina}</p>
+                      <p>{medidasOring.TMolde}</p>
+                      <p>{medidasOring.TProceso}</p>
+                      <p>{medidasOring.Tdistribucion}</p>
+                      <p>{medidasOring._id}</p> 
+
+                  </div>
+                ))
+              }
+            </div>
+        
     </div>
   )
 }
