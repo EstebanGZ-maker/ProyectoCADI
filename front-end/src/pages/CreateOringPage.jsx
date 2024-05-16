@@ -1,12 +1,13 @@
 import { React } from "react";
 import { useForm } from "react-hook-form";
 import { useQueryOring } from "../context/QueryContext";
+import { useNavigate } from "react-router-dom";
 
 function CreateOringPage() {
 
   const {register, handleSubmit, formState: {errors}, } = useForm();
   const { createQueryOring, errors: createQueryOringsError } = useQueryOring(); 
-  
+  const navigate = useNavigate(); 
 
   const onSubmit = handleSubmit((data) => {
 
@@ -18,9 +19,9 @@ function CreateOringPage() {
     data.PrecioVenta = parseFloat(data.PrecioVenta);
     /* data.Tmaquina.toString(data.Tmaquina); */
      
-    //console
     console.log(data); 
     createQueryOring(data);
+    /* navigate("/viewCreateOring") */
   }); 
 
   return (

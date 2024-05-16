@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { createOringsRequest, getOringsRequest } from "../api/queryOring.js";
 
+
 const QueryOringContext = createContext(); 
 
 export const useQueryOring = () => {
@@ -16,8 +17,9 @@ export const useQueryOring = () => {
 export const QueryOringProvider = ({children}) => {
     const [queryOring, setQueryOring] = useState([]); 
     const [medidasOring, setMedidasOring ] = useState([]); 
+    const [isAuthenticated, setIsAuthenticated ] = useState(false);
     const [errors, setErrors ] = useState([]); 
-
+    const [loading, setLoading] = useState(true);
 
 //Creador de la consulta
     const createQueryOring = async (queryOring) => {
@@ -28,22 +30,33 @@ export const QueryOringProvider = ({children}) => {
             setQueryOring(res.data); 
 
         } catch (error) {
-            console.error(errors); 
-            setErrors(error.response.data)
+            console.error(error, "Aca sale"); 
+            setErrors([error.response.data.message])
+            console.log(error.response.status);
+            console.log(error.toJSON());
         }
     }
 
     //Obtenedor de la consulta
-    const getQueryOring = async (medidasOring) => {
-
+    const getQueryOring = async ( medidasOring) => {
+        if (!medidasOring) {
+            console.error("Error: Medidas de oring indefinidas"); 
+            return; 
+        }
         try {
-            const res = await getOringsRequest(medidasOring)
-            console.log(res.data); 
-            setMedidasOring(res.data); 
+            const res = await getOringsRequest(medidasOring) 
+            console.log(res.data.message); 
+            console.log(res.data.result); 
+            setMedidasOring(res.data.result); 
+            setIsAuthenticated(true)
 
         } catch (error) {
-            console.error(errors);
-            setErros([error.response.data.message])
+            console.error(error, "Aca esta el error");
+            setErrors([error.response.data.message])
+            console.log(error.response.status);
+            console.log(error.toJSON());
+
+           
         }
     }
 
@@ -67,13 +80,28 @@ export const QueryOringProvider = ({children}) => {
     }, [data.Tmaquina]); 
  */
 
+        useEffect(() => {
+            if (errors.length > 0) {
+                const timer = setTimeout(() => {
+                    setErrors([])
+                }, 6000)
+                return () => clearTimeout(timer)
+            }
+        },[errors]); 
+
     return (
         < QueryOringContext.Provider
             value = {{
-                queryOring,
-                medidasOring,
                 createQueryOring,
                 getQueryOring,
+                queryOring,
+                medidasOring,
+                isAuthenticated, 
+                loading, 
+                /* Espesor, 
+                Dexterno,
+                Dinterno, */ 
+                
                 errors, 
                 /* handleChange, */  
             }}

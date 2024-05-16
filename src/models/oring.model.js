@@ -1,6 +1,6 @@
-import { Double } from "mongodb";
+
 import mongoose from "mongoose"
-import { type } from "os";
+
 
 
 //Esquema de como se van a guardar los datos de los productos en la DB

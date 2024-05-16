@@ -1,3 +1,4 @@
+import { query } from "express";
 import OringsData  from "../models/oring.model.js";
 
 
@@ -47,21 +48,21 @@ export const getQueryOrings = async (req, res) => {
 
 //Obtener un oring dependiendo las medidas solicitadas
 export const getQueryOring = async (req, res) => {
-
-    const {Espesor, Dexterno, Dinterno } = req.body; 
     
+    const {Espesor, Dexterno, Dinterno} = req.query; 
+
     try {
         
         const oringFound = await OringsData.find({ 
         $and: [
-            {Espesor: { $gte: Espesor - 0.5, $lte: Espesor + 0.5 }},
-            {Dexterno: { $gte: Dexterno - 0.5, $lte: Dexterno + 0.5 }},
-            {Dinterno: { $gte: Dinterno - 0.5, $lte: Dinterno + 0.5 }},
+            {Espesor: { $gte: parseFloat(Espesor) - 0.3, $lte: parseFloat(Espesor) + 0.3 }},
+            {Dexterno: { $gte: parseFloat(Dexterno) - 0.5, $lte: parseFloat(Dexterno) + 0.5 }},
+            {Dinterno: { $gte: parseFloat(Dinterno) - 0.5, $lte: parseFloat(Dinterno) + 0.5 }},
             // posibles parametros 
             //{codigoCompuesto: codigoCompuesto},
         ] 
+             
       }); 
-
       //Lo que va responder 
       if (oringFound.length > 0) {
         

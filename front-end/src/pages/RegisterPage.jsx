@@ -15,7 +15,7 @@ function RegisterPage() {
     });   
     
     useEffect(() => {
-      if (isAuthenticated) navigate("/queryOring"); 
+      if (isAuthenticated) navigate("/queryOring/query"); 
     }, [isAuthenticated]); 
 
   return (

@@ -2,33 +2,36 @@ import { React } from 'react'
 import { useForm } from "react-hook-form";
 import { useQueryOring } from "../context/QueryContext.jsx";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 function QueryOringPage() {
 
   const{ register, handleSubmit, formState: {errors}, } = useForm(); 
-  const { getQueryOring, erros: getQueryOringError } = useQueryOring(); 
+  const { getQueryOring, errors: getQueryOringErrors } = useQueryOring(); 
+  const navigate = useNavigate()
 
   const onSubmit = handleSubmit((data) => {
 
-    data.Espesor = parseFloat(data.Espesor);
-    data.Dexterno = parseFloat(data.Dexterno);
-    data.Dinterno = parseFloat(data.Dinterno);
-
-    console.log(data); 
-    getQueryOring(data); 
+    
+      data.Espesor = parseFloat(data.Espesor);
+      data.Dexterno = parseFloat(data.Dexterno);
+      data.Dinterno = parseFloat(data.Dinterno);
+   
+      getQueryOring(data); 
+      //navigate("/viewQueryOring")
+  
   }); 
   
   return (
     <div className="  flex h-screen items-center justify-center " >
 
-      {/* {getQueryOringError.map(( error , i) => (
-              <div className=" bg-red-500 p-2 text-white text-center my-3 " key={i} >
-                {error}
-              </div>))
-            } */}
-
         <div className=' bg-zinc-800 max-w-md w-full p-10 rounded-md ' >
+
+           { getQueryOringErrors.map(( error , i ) => (
+             <div className=' bg-red-500 p-2 text-white text-center my-3' key={i} > 
+             {error}
+            </div>))}
 
           <h1 className='  text-white text-2xl font-bold text-center' >INGRESA LAS MEDIDAS DEL ORING</h1>
 
@@ -67,7 +70,10 @@ function QueryOringPage() {
               errors.Dinterno && <span className="text-white" > El Diametro interno es obligatorio</span>
             }
 
-            <button type="submit" className=" w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-3 " >Consultar</button>      
+            <button  
+              type="submit" className=" w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-3 " 
+            >Consultar
+            </button>      
 
             <p className="flex gap-x-2 justify-between text-white " >
              < Link to = "/HomePage" className="text-sky-600  text-center "> Regresar a la Pagina Principal </Link> 

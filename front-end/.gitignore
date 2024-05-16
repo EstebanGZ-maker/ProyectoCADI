@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+#Esto para iniciar el server del front
+cd front-end 
+npm run dev
