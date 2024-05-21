@@ -1,123 +1,230 @@
-import { React, useEffect } from 'react'
-import { useForm } from "react-hook-form";
-import { useQueryOring } from "../context/QueryContext.jsx";
-import { Link } from "react-router-dom";
-/* import { useNavigate } from "react-router-dom"; */
-
+/* import React, { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { useQueryOring } from '../context/QueryContext.jsx';
 
 function QueryOringPage() {
-
-  const{ register, handleSubmit, formState: {errors}, } = useForm(); 
-  const { getQueryOring, medidasOring,  errors: getQueryOringErrors } = useQueryOring(); 
-  /* const navigate = useNavigate() */
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { getQueryOring, medidasOring, errors: getQueryOringErrors } = useQueryOring();
+  
 
   useEffect(() => {
-    getQueryOring()
-  }, [])
+    getQueryOring();
+  }, []);
 
   const onSubmit = handleSubmit((data) => {
+    data.Espesor = parseFloat(data.Espesor);
+    data.Dexterno = parseFloat(data.Dexterno);
+    data.Dinterno = parseFloat(data.Dinterno);
+    getQueryOring(data);
+  });
 
-      data.Espesor = parseFloat(data.Espesor);
-      data.Dexterno = parseFloat(data.Dexterno);
-      data.Dinterno = parseFloat(data.Dinterno);
-   
-      getQueryOring(data); 
-      /* navigate("/viewQueryOring") */
-  
-  }); 
+
   
   return (
+    <div className="mt-20 flex justify-center data-container">
+      <div className='bg-zinc-500 max-w-md w-full p-10 rounded-md'>
+        {getQueryOringErrors.map((error, i) => (
+          <div className='bg-red-500 p-2 text-white text-center my-3' key={i}>
+            {error}
+          </div>
+        ))}
 
-    <div className="  flex h-screen items-center justify-center " >
+        <h1 className='text-gray-800 text-2xl font-bold text-center'>CONSULTAR</h1>
 
-        <div className=' bg-zinc-800 max-w-md w-full p-10 rounded-md ' >
+        <form onSubmit={onSubmit}>
+          <div className="my-3">
+            <input
+              type="text"
+              placeholder="Especifica el espesor del oring con un punto entre los numeros (.)"
+              {...register("Espesor", { required: true })}
+              className="w-full bg-zinc-300 text-gray-800 px-4 py-2 rounded-md"
+            />
+            {errors.Espesor && <span className="text-white">El Espesor es obligatorio</span>}
+          </div>
 
-           { getQueryOringErrors.map(( error , i ) => (
-             <div className=' bg-red-500 p-2 text-white text-center my-3' key={i} > 
-             {error}
-            </div>))}
+          <div className="my-3">
+            <input
+              type="text"
+              placeholder="Especifica el Diametro interno del oring con un punto entre los numeros (.)"
+              {...register("Dinterno", { required: true })}
+              className="w-full bg-zinc-300 text-gray-800 px-4 py-2 rounded-md"
+            />
+            {errors.Dinterno && <span className="text-white">El Diametro interno es obligatorio</span>}
+          </div>
 
-          <h1 className='  text-white text-2xl font-bold text-center' >INGRESA LAS MEDIDAS DEL ORING</h1>
+          <div className="my-3">
+            <input
+              type="text"
+              placeholder="Especifica el Diametro externo del oring con un punto entre los numeros (.)"
+              {...register("Dexterno", { required: true })}
+              className="w-full bg-zinc-300 text-gray-800 px-4 py-2 rounded-md"
+            />
+            {errors.Dexterno && <span className="text-white">El Diametro externo es obligatorio</span>}
+          </div>
 
-          <form onSubmit = {onSubmit}>
+          <button type="submit" className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-3">
+            GENERAR CONSULTA
+          </button>
+        </form>
 
-{/* ESPESOR */}
-            <input 
-              type="text" 
-              placeholder = "Especifica el espesor del oring con un punto entre los numeros (.) "
-              {...register( "Espesor", {require: true })} 
-              className=" w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-3"
-            /> 
-            {
-              errors.Espesor && <span className="text-white" > El Espesor es obligatorio</span>
-            }
+        <div className='bg-zinc-500 max-w-md w-full p-10 rounded-md'>
+          <h1 className='text-gray-800 text-2xl font-bold text-center' style={{ boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)" }}>
+            Resultado de la consulta
+          </h1>
 
-{/* D EXTERNO */}
-            <input 
-              type="text" 
-              placeholder = "Especifica el Diametro externo del oring con un punto entre los numeros (.) "
-              {...register( "Dexterno", {require: true })} 
-              className=" w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-3"
-            /> 
-            {
-              errors.Dexterno && <span className="text-white" > El Diametro externo es obligatorio</span>
-            }
-
-{/* D INTERNO */}
-            <input 
-              type="text" 
-              placeholder = "Especifica el Diametro interno del oring con un punto entre los numeros (.) "
-              {...register( "Dinterno", {require: true })} 
-              className=" w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-3"
-            /> 
-            {
-              errors.Dinterno && <span className="text-white" > El Diametro interno es obligatorio</span>
-            }
-
-            <button  
-              type="submit" className=" w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-3 " 
-            >Consultar
-            </button>      
-
-            <p className="flex gap-x-2 justify-between text-white " >
-             < Link to = "/HomePage" className="text-sky-600  text-center "> Regresar a la Pagina Principal </Link> 
-          </p>{/* esa ruta del home esta mala usar la del Appjsx */}
-
-          </form>
-        </div>
-
-            <div className=' bg-zinc-800 max-w-md w-full p-10 rounded-md ' >
-              {
-                medidasOring.map( medidasOring => (
-                  <div className=" w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-3" > 
-                      <h1>Resultado de la consulta</h1>
-                      <p>{medidasOring.CodigoCompu}</p>
-                      <p>{medidasOring.DESCRIPCIÓN}</p>
-                      <p>{medidasOring.Espesor}</p>
-                      <p>{medidasOring.Dexterno}</p>
-                      <p>{medidasOring.Dinterno}</p>
-                      <p>{medidasOring.ID}</p>
-                       <p>{medidasOring.Idmolde}</p>
-                      <p>{medidasOring.Medidas}</p>
-                      <p>{medidasOring.Mtamaño}</p>
-                      <p>{medidasOring.Ncavidades}</p>
-                      <p>{medidasOring.Nplacas}</p>
-                      <p>{medidasOring.Patin}</p>
-                      <p>{medidasOring.Pesogr}</p>
-                      <p>{medidasOring.PrecioProducir}</p>
-                      <p>{medidasOring.TMaquina}</p>
-                      <p>{medidasOring.TMolde}</p>
-                      <p>{medidasOring.TProceso}</p>
-                      <p>{medidasOring.Tdistribucion}</p>
-                      <p>{medidasOring._id}</p> 
-
-                  </div>
-                ))
-              }
+          {medidasOring.map((medida, i) => (
+            <div key={i} className="w-full bg-zinc-600 text-white px-4 py-2 rounded-md my-3">
+              <span className='text-gray-800 text-2xl font-bold'>Datos de Oring</span>
+              <ul>
+                <li>Descripción: {medida.DESCRIPCIÓN}</li>
+                <li>Compuesto: {medida.CodigoCompu}</li>
+                <li>Espesor: {medida.Espesor}</li>
+                <li>Diametro externo: {medida.Dexterno}</li>
+                <li>Dimetro Interno: {medida.Dinterno}</li>
+                <li>Identificador: {medida.ID}</li>
+                <li>Identificador Molde: {medida.Idmolde}</li>
+                <li>{medida.Medidas}</li>
+                <li>Tamaño molde: {medida.Mtamaño}</li>
+                <li># Cavidades: {medida.Ncavidades}</li>
+                <li># Placas: {medida.Nplacas}</li>
+                <li>Patin: {medida.Patin}</li>
+                <li>Peso gr: {medida.Pesogr}</li>
+                <li>Precio P: {medida.PrecioProducir}</li>
+                <li>Tipo maquinas: {medida.TMaquina}</li>
+                <li>Tipo molde: {medida.TMolde}</li>
+                <li>Tipo Proceso: {medida.TProceso}</li>
+                <li>Tipo distribución: {medida.Tdistribucion}</li>
+                <li>Identificador DB: {medida._id}</li>
+              </ul>
             </div>
-        
+          ))}
+        </div>
+      </div>
     </div>
-  )
+  );
 }
 
-export default QueryOringPage
+export default QueryOringPage;
+ */
+
+import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useQueryOring } from '../context/QueryContext.jsx';
+
+function QueryOringPage() {
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { getQueryOring, medidasOring, errors: getQueryOringErrors } = useQueryOring();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);
+
+  useEffect(() => {
+    getQueryOring();
+  }, []);
+
+  const onSubmit = handleSubmit((data) => {
+    data.Espesor = parseFloat(data.Espesor);
+    data.Dexterno = parseFloat(data.Dexterno);
+    data.Dinterno = parseFloat(data.Dinterno);
+    getQueryOring(data);
+  });
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = medidasOring.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  return (
+    <div className="mt-20 flex justify-center data-container">
+      <div className='bg-zinc-500 max-w-md w-full p-10 rounded-md'>
+        {getQueryOringErrors.map((error, i) => (
+          <div className='bg-red-500 p-2 text-white text-center my-3' key={i}>
+            {error}
+          </div>
+        ))}
+
+        <h1 className='text-gray-800 text-2xl font-bold text-center'>CONSULTAR</h1>
+
+        <form onSubmit={onSubmit}>
+          <div className="my-3">
+            <input
+              type="text"
+              placeholder="Especifica el espesor del oring con un punto entre los numeros (.)"
+              {...register("Espesor", { required: true })}
+              className="w-full bg-zinc-300 text-gray-800 px-4 py-2 rounded-md"
+            />
+            {errors.Espesor && <span className="text-white">El Espesor es obligatorio</span>}
+          </div>
+
+          <div className="my-3">
+            <input
+              type="text"
+              placeholder="Especifica el Diametro interno del oring con un punto entre los numeros (.)"
+              {...register("Dinterno", { required: true })}
+              className="w-full bg-zinc-300 text-gray-800 px-4 py-2 rounded-md"
+            />
+            {errors.Dinterno && <span className="text-white">El Diametro interno es obligatorio</span>}
+          </div>
+
+          <div className="my-3">
+            <input
+              type="text"
+              placeholder="Especifica el Diametro externo del oring con un punto entre los numeros (.)"
+              {...register("Dexterno", { required: true })}
+              className="w-full bg-zinc-300 text-gray-800 px-4 py-2 rounded-md"
+            />
+            {errors.Dexterno && <span className="text-white">El Diametro externo es obligatorio</span>}
+          </div>
+
+          <button type="submit" className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-3">
+            GENERAR CONSULTA
+          </button>
+        </form>
+
+        <div className='bg-zinc-500 max-w-md w-full p-10 rounded-md'>
+          <h1 className='text-gray-800 text-2xl font-bold text-center' style={{ boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)" }}>
+            Resultado de la consulta
+          </h1>
+
+          {currentItems.map((medida, i) => (
+            <div key={i} className="w-full bg-zinc-600 text-white px-4 py-2 rounded-md my-3">
+              <span className='text-gray-800 text-2xl font-bold'>Datos de Oring</span>
+              <ul>
+              <li>Descripción: <span className="shadow underline"> {medida.DESCRIPCIÓN}</span></li>
+              <li>Compuesto: <span className="shadow underline">{medida.CodigoCompu}</span></li>
+              <li>Espesor: {medida.Espesor}</li>
+              <li>Diametro externo: {medida.Dexterno}</li>
+              <li>Dimetro Interno: {medida.Dinterno}</li>
+              <li>Identificador: {medida.ID}</li>
+              <li>Identificador Molde: {medida.Idmolde}</li>
+              <li>{medida.Medidas}</li>
+              <li>Tamaño molde: {medida.Mtamaño}</li>
+              <li># Cavidades: {medida.Ncavidades}</li>
+              <li># Placas: {medida.Nplacas}</li>
+              <li>Patin: {medida.Patin}</li>
+              <li>Peso gr: {medida.Pesogr}</li>
+              <li>Precio P: {medida.PrecioProducir}</li>
+              <li>Tipo maquinas: {medida.TMaquina}</li>
+              <li>Tipo molde: {medida.TMolde}</li>
+              <li>Tipo Proceso: {medida.TProceso}</li>
+              <li>Tipo distribución: {medida.Tdistribucion}</li>
+              <li>Identificador DB: {medida._id}</li>
+              </ul>
+            </div>
+          ))}
+
+          {/* Paginación */}
+          <ul className="flex justify-center">
+            {Array(Math.ceil(medidasOring.length / itemsPerPage)).fill().map((_, i) => (
+              <li key={i} className="cursor-pointer mx-1" onClick={() => paginate(i + 1)}>
+                {i + 1}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default QueryOringPage;

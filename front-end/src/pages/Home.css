@@ -1,0 +1,51 @@
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #7c7e81; /* Background color similar to bg-zinc-700 */
+    min-height: 100vh; /* Full height */
+  }
+  
+  .home-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .home-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .card {
+    background-color: #f7fafc; /* Light background for cards */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 300px;
+  }
+  
+  .card h2 {
+    margin-bottom: 10px;
+  }
+  
+  .card p {
+    margin-bottom: 20px;
+  }
+  
+  .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3CB371;; /* Background color similar to bg-zinc-700 */
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+  }
+  
+  .btn:hover {
+    background-color: #4a5568; /* Slightly lighter on hover */
+  }
+  
