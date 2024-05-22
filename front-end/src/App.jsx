@@ -14,6 +14,7 @@ import { QueryOringProvider } from "./context/QueryContext.jsx";
 import Navbar from "./components/Navbar.jsx";
 import ViewCreateOring from "./pages/ViewCreateOring.jsx";
 import  ViewQueryOring  from "./pages/ViewQueryOring.jsx";
+import PdfPage from "./pages/PdfPage.jsx";
 
 
 
@@ -31,6 +32,7 @@ function App() {
       <Route element = {< ProtectedRoute />} >
         <Route path="/queryOring/query" element={ < OringPage /> } /> 
         <Route path="/queryOring" element={ < CreateOringPage /> } />  
+        <Route path="/pdfPage" element={ < PdfPage /> } />
         <Route path="/viewCreateOring" element={ < ViewCreateOring /> } />
         <Route path="/viewQueryOring" element={ < ViewQueryOring /> } /> 
 

@@ -61,7 +61,6 @@ function CreateOringPage() {
           type="text" 
           placeholder="Descripción" 
           {...register("description" , {required: true })} 
-          autoFocus
           className=" w-full bg-zinc-300  text-gray-800 px-4 py-2 rounded-md my-3"
         />
           {
@@ -74,7 +73,6 @@ function CreateOringPage() {
           type="text" 
           placeholder="Codigo del Compuesto" {
           ...register("codigoCompuesto" , {required: true })} 
-          autoFocus
           className=" w-full bg-zinc-300  text-gray-800 px-4 py-2 rounded-md my-3"
         />
         {
@@ -87,7 +85,6 @@ function CreateOringPage() {
           type="text" 
           placeholder="Espesor" {
           ...register("Espesor" , {required: true })} 
-          autoFocus
           className=" w-full bg-zinc-300  text-gray-800 px-4 py-2 rounded-md my-3"
         />
           {
