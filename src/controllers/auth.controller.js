@@ -3,7 +3,8 @@ import bcrypt from "bcryptjs"
 import { createAccesToken } from "../libs/jwt.js";
 import jwt from "jsonwebtoken";
 import { TOKEN_SECRET } from "../config.js";
-import { ifError } from "assert";
+
+
 
 //REGISTRO
 export const register = async (req, res) => {
@@ -58,7 +59,7 @@ export const login = async (req, res) => {
         return res.status(401).json({ message: "Correo y/o Contraseña incorrecto " })
       };
 
-    const token = await createAccesToken({ id: userFound._id, username: userFound.username }); 
+    const token = await createAccesToken({ id: userFound._id, username: userFound.username } ); 
      
      //lo que va a responder del usuario 
     res.cookie("token", token, {httOnly : true});

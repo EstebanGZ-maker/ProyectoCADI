@@ -1,4 +1,3 @@
-import { query } from "express";
 import OringsData  from "../models/oring.model.js";
 
 

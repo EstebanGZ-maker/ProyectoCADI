@@ -57,21 +57,21 @@ function Navbar() {
                       Buscar Orings
                     </Link>
                   </li>
-                  <li>
-                    <Link to={`/queryOring`} className='block px-4 py-2 text-gray-800 hover:bg-gray-200'>
-                      Crear Oring
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to={`/pdfPage`} className='block px-4 py-2 text-gray-800 hover:bg-gray-200'>
-                      Buscar/Subir PDF
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/" onClick={() => { logout(); setMenuOpen(false); }} className='block px-4 py-2 text-gray-800 hover:bg-gray-200'>
-                      Cerrar sesión
-                    </Link>
-                  </li>
+                    <li>
+                      <Link to={`/queryOring`} className='block px-4 py-2 text-gray-800 hover:bg-gray-200'>
+                        Crear Oring
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to={`/pdfPage`} className='block px-4 py-2 text-gray-800 hover:bg-gray-200'>
+                        Buscar/Subir PDF
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/" onClick={() => { logout(); setMenuOpen(false); }} className='block px-4 py-2 text-gray-800 hover:bg-gray-200'>
+                        Cerrar sesión
+                      </Link>
+                    </li>
                 </ul>
               )}
             </li>

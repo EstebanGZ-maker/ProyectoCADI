@@ -83,11 +83,11 @@ function QueryOringPage() {
               <span className='text-gray-800 text-2xl font-bold'>Datos de Oring</span>
               <ul>
               <li>Descripción: <span className="shadow underline"> {medida.DESCRIPCIÓN}</span></li>
+              <li>Identificador: {medida.ID}</li>
               <li>Compuesto: <span className="shadow underline">{medida.CodigoCompu}</span></li>
               <li>Espesor: {medida.Espesor}</li>
-              <li>Diametro externo: {medida.Dexterno}</li>
               <li>Dimetro Interno: {medida.Dinterno}</li>
-              <li>Identificador: {medida.ID}</li>
+              <li>Diametro externo: {medida.Dexterno}</li>
               <li>Identificador Molde: {medida.Idmolde}</li>
               <li>{medida.Medidas}</li>
               <li>Tamaño molde: {medida.Mtamaño}</li>
