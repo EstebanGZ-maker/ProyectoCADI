@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -15,7 +14,7 @@ function LoginPage() {
   });
 
   useEffect(() =>  {
-    if (isAuthenticated) navigate("/queryOring/query");
+    if (isAuthenticated) navigate("/productsHome");
       
   }, [isAuthenticated]); 
 
@@ -56,11 +55,11 @@ function LoginPage() {
             errors.password && <span className="text-gray-700"> La contraseña es obligatoria </span>
             }  
 
-            <button type="submit" className=" w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-3 " >Login</button>      
+            <button type="submit" className=" w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-3 font-bold " >Login</button>      
           </form>
 
           <p className="flex gap-x-2 justify-between text-gray-500 " >
-            ¿No estas registrado? < Link to = "/register" className="text-sky-500 "> Registrarse </Link> 
+            Si no estas registrado solicita un usuario  
           </p>
 
         </div>

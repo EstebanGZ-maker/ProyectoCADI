@@ -9,9 +9,10 @@ import { TOKEN_SECRET } from "../config.js";
 //REGISTRO
 export const register = async (req, res) => {
 
-   const {email, password , username } = req.body
-
-  try {
+   const {email, password , username, roles } = req.body
+   
+   try {
+       //Buscar y reegistrar usuarios nuevos 
 
     const userFound = await User.findOne({email}); 
     if (userFound)
@@ -23,17 +24,22 @@ export const register = async (req, res) => {
         username,
         email,
         password : passwordHash, 
+        roles: roles ? roles : ["user"]
        }); 
-    const userSaved = await newUser.save()
-    const token = await createAccesToken({id: userSaved._id})
+
+    const userSaved = await newUser.save();
+    const token = await createAccesToken({id: userSaved._id, user: userSaved.username, roles: userSaved.roles});
+
+    console.log(token)
     
     //lo que va a responder del usuario 
-        res.cookie("token", token ); 
+        res.cookie("token", token, { httpOnly: true }); 
         res.json({
         message: "User created successfuly",
         id: userSaved._id,
         username: userSaved.username,
         email: userSaved.email, 
+        roles: userSaved.roles, 
         createdAt: userSaved.createdAt,
         updatedAt:userSaved.updatedAt, 
        }) 
@@ -59,8 +65,8 @@ export const login = async (req, res) => {
         return res.status(401).json({ message: "Correo y/o Contraseña incorrecto " })
       };
 
-    const token = await createAccesToken({ id: userFound._id, username: userFound.username } ); 
-     
+    const token = await createAccesToken({id: userFound._id, username: userFound.username, roles: userFound.roles});
+    
      //lo que va a responder del usuario 
     res.cookie("token", token, {httOnly : true});
     res.json({
@@ -68,6 +74,7 @@ export const login = async (req, res) => {
          id: userFound._id,
          username: userFound.username,
          email: userFound.email, 
+         roles: userFound.roles,
          createdAt: userFound.createdAt,
          updatedAt:userFound.updatedAt, 
         }) 

@@ -1,12 +1,11 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { registerRequest, loginRequest, verifyTokenRequet } from "../api/auth.js";
 import Cookies from "js-cookie";
-import { set } from "mongoose";
 
 
 export const AuthContext = createContext();
 
-export const useAuth = ( ) => {
+export const useAuth = () => {
     const context = useContext(AuthContext)
     if (!context) {
         throw new Error("Useth must be used within an AuthProvider")
@@ -28,7 +27,9 @@ export const AuthProvider = ({ children }) => {
             setIsAuthenticated(true)
             
         } catch (error) {
-            setErros(error.response.data);  
+            setErros([error.response.data.message]); 
+            console.log(error.response.status);
+            console.log(error.toJSON()); 
         } 
     };
 

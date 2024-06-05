@@ -5,10 +5,14 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import cors from "cors"
 
+//Routes 
+
 import authRoutes from "./routes/auth.routes.js"
 import queryOringRoutes  from "./routes/queryOring.routes.js"
 
 const app = express();
+
+//Middlewares
 
 app.use(cors({
     origin: `http://localhost:5173`,

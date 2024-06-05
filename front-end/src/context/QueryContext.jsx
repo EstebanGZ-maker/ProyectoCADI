@@ -30,7 +30,6 @@ export const QueryOringProvider = ({children}) => {
             setQueryOring(res.data); 
 
         } catch (error) {
-            console.error(error, "Aca sale"); 
             setErrors([error.response.data.message])
             console.log(error.response.status);
             console.log(error.toJSON());
@@ -51,34 +50,12 @@ export const QueryOringProvider = ({children}) => {
             setIsAuthenticated(true)
 
         } catch (error) {
-            console.error(error, "Aca esta el error");
-            setErrors([error.response.data.message])
+            setErrors([error.response.status])
             console.log(error.response.status);
             console.log(error.toJSON());
-
-           
+            setErrors(error.response.status)
         }
     }
-
- /*    const handleChange = (event) => {
-        const numeroMaquina = event.target.value.toString(); 
-        const copiaMaquinaSelect = [...queryOring]; 
-
-        if (event.target.checked) {
-            copiaMaquinaSelect.push(numeroMaquina); 
-        } else {
-            copiaMaquinaSelect = copiaMaquinaSelect.filter((valor) => valor !== numeroMaquina); 
-        }
-        setQueryOring(copiaMaquinaSelect);
-    }; 
- 
-//use efect 
-
-    useEffect(() => {
-        const initialSelected = data.Tmaquina.map((valor) => valor.toString());
-        setQueryOring(initialSelected); 
-    }, [data.Tmaquina]); 
- */
 
         useEffect(() => {
             if (errors.length > 0) {
@@ -98,19 +75,11 @@ export const QueryOringProvider = ({children}) => {
                 medidasOring,
                 isAuthenticated, 
                 loading, 
-                /* Espesor, 
-                Dexterno,
-                Dinterno, */ 
-                
                 errors, 
-                /* handleChange, */  
             }}
         >    
             {children}
         </ QueryOringContext.Provider>
-
-
     )
-    
 }
 

@@ -13,8 +13,11 @@ import ProtectedRoute from "./ProtectedRoute.jsx";
 import { QueryOringProvider } from "./context/QueryContext.jsx";
 import Navbar from "./components/Navbar.jsx";
 import ViewCreateOring from "./pages/ViewCreateOring.jsx";
-import  ViewQueryOring  from "./pages/ViewQueryOring.jsx";
+import ViewQueryOring  from "./pages/ViewQueryOring.jsx";
 import PdfPage from "./pages/PdfPage.jsx";
+import ProductsHome from "./pages/ProductsHome.jsx";
+import CreateArandelasPage from "./pages/CreateArandelasPage.jsx";
+import ArandelasPage from "./pages/ArandelasPage.jsx";
 
 
 
@@ -27,12 +30,15 @@ function App() {
     <Routes>  
         <Route path="/" element= { < HomePage /> } /> 
         <Route path="/login" element={<LoginPage/>} /> 
-        <Route path="/register" element={ <RegisterPage/> } />  
   
       <Route element = {< ProtectedRoute />} >
-        <Route path="/queryOring/query" element={ < OringPage /> } /> 
+        <Route path="/register" element={ <RegisterPage/> } />  
         <Route path="/queryOring" element={ < CreateOringPage /> } />  
+        <Route path="/queryOring/query" element={ < OringPage /> } /> 
+        <Route path="/createArandelas" element={ < CreateArandelasPage /> } />
+        <Route path="/arandelasPage" element={ < ArandelasPage /> } />
         <Route path="/pdfPage" element={ < PdfPage /> } />
+        <Route path="/productsHome" element={ < ProductsHome /> } />
         <Route path="/viewCreateOring" element={ < ViewCreateOring /> } />
         <Route path="/viewQueryOring" element={ < ViewQueryOring /> } /> 
 

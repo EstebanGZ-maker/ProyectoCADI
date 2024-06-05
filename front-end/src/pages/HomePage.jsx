@@ -7,27 +7,27 @@ function HomePage() {
   return (
     <div className="home-container">
       <header className="home-header">
-        <h1 className="text-4xl font-bold text-center text-white my-4">Bienvenido a Query Products Manager</h1>
-        <p className="text-xl text-center text-gray-200 mb-8">
+        <h1 className="text-4xl font-bold text-center  text-gray-800 my-4">Bienvenido a Query Products Manager</h1>
+        <p className="text-xl text-center  mb-8 text-gray-800">
           Una herramienta eficiente para gestionar y consultar productos de manera fácil y rápida.
         </p>
       </header>
       
       <section className="home-content">
         <div className="card">
-          <h2 className="text-2xl font-bold text-gray-800">Buscar Orings</h2>
+          <h2 className="text-2xl font-bold text-gray-800">Buscar Productos</h2>
           <p className="text-gray-600">
-            Utiliza nuestra herramienta de búsqueda avanzada para encontrar los orings que necesitas.
+            Utiliza nuestra herramienta de búsqueda avanzada para encontrar los productos que necesitas.
           </p>
-          <Link to="/queryOring/query" className="btn">Buscar Orings</Link>
+          <Link to="/productsHome" className="btn">Buscar Productos</Link>
         </div>
         
         <div className="card">
-          <h2 className="text-2xl font-bold text-gray-800">Crear Oring</h2>
+          <h2 className="text-2xl font-bold text-gray-800">Crear Productos</h2>
           <p className="text-gray-600">
-            Añade nuevos orings a la base de datos de manera rápida y sencilla.
+            Añade nuevos productos a la base de datos de manera rápida y sencilla.
           </p>
-          <Link to="/queryOring" className="btn">Crear Oring</Link>
+          <Link to="/productsHome" className="btn">Crear Productos</Link>
         </div>
         
         <div className="card">

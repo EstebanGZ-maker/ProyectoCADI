@@ -7,6 +7,8 @@ function QueryOringPage() {
   const { getQueryOring, medidasOring, errors: getQueryOringErrors } = useQueryOring();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [calculatedValues, setCalculatedValues] = useState({ DI: '', DE: '', CS: '' });
 
   useEffect(() => {
     getQueryOring();
@@ -17,7 +19,37 @@ function QueryOringPage() {
     data.Dexterno = parseFloat(data.Dexterno);
     data.Dinterno = parseFloat(data.Dinterno);
     getQueryOring(data);
+    setSuccessMessage('Consulta realizada con éxito.');
   });
+
+  const handleCalculate = () => {
+    let DE, CS, DI;
+
+    if (calculatedValues.DI !== '' && calculatedValues.CS !== '') {
+      DE = parseFloat(calculatedValues.DI) + (2 * parseFloat(calculatedValues.CS));
+
+    } else if (calculatedValues.DE !== '' && calculatedValues.DI !== '') {
+      CS = (parseFloat(calculatedValues.DE) - parseFloat(calculatedValues.DI)) / 2;
+
+    } else if (calculatedValues.DE !== '' && calculatedValues.CS !== '') {
+      DI = parseFloat(calculatedValues.DE) - (2 * parseFloat(calculatedValues.CS));
+    }
+
+    setCalculatedValues({ 
+      ...calculatedValues, 
+      DE: DE !== undefined ? DE.toFixed(2) : calculatedValues.DE, 
+      CS: CS !== undefined ? CS.toFixed(2) : calculatedValues.CS, 
+      DI: DI !== undefined ? DI.toFixed(2) : calculatedValues.DI 
+    });
+  };
+
+  const handleChange = (e) => {
+    setCalculatedValues({ ...calculatedValues, [e.target.name]: e.target.value });
+  };
+
+  const resetCalculator =() => {
+    setCalculatedValues({DI: '', DE: '', CS: ''});
+  };
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -26,94 +58,197 @@ function QueryOringPage() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className="mt-20 flex justify-center data-container">
-      <div className='bg-zinc-500 max-w-md w-full p-10 rounded-md'>
-        {getQueryOringErrors.map((error, i) => (
-          <div className='bg-red-500 p-2 text-white text-center my-3' key={i}>
-            {error}
+    <div className="mt-20 flex flex-col items-center data-container">
+      <div className='bg-zinc-200 max-w-lg w-full p-10 rounded-md contenedor '>
+        
+        {getQueryOringErrors && getQueryOringErrors.length > 0 && (
+          <div className='bg-red-500 p-2 text-white text-center my-3'>
+            {getQueryOringErrors.join(', ')}
           </div>
-        ))}
+        )}
+
+        {successMessage && (
+          <div className='bg-green-700 p-2 text-white text-center my-3'>
+            {successMessage}
+          </div>
+        )}
 
         <h1 className='text-gray-800 text-2xl font-bold text-center'>CONSULTAR</h1>
 
         <form onSubmit={onSubmit}>
-          <div className="my-3">
+          <div className=" my-3 flex justify-center">
             <input
               type="text"
-              placeholder="Especifica el espesor con punto: 5.4"
+              placeholder="Pon el W con punto: 5.4"
               autoFocus
               {...register("Espesor", { required: true })}
-              className="w-full bg-zinc-300 text-gray-800 px-4 py-2 rounded-md"
+              className="w-medium  bg-transparent text-gray-700 px-10 py-3 rounded-md my-2 "
+              style={{boxShadow:"0 4px 8px rgba(0, 0, 0, 0.2)", border: "1px solid black" }}
             />
-            {errors.Espesor && <span className="text-white">El Espesor es obligatorio</span>}
           </div>
+            {errors.Espesor && <span className="text-red-400 flex justify-center ">El Espesor es obligatorio</span>}
 
-          <div className="my-3">
+          <div className="my-3 flex justify-center">
             <input
               type="text"
-              placeholder="Especifica Diametro Interno con punto: 2.1"
+              placeholder="Pon el I/D con punto: 2.1"
               {...register("Dinterno", { required: true })}
-              className="w-full bg-zinc-300 text-gray-800 px-4 py-2 rounded-md"
+              className="w-medium  bg-transparent text-gray-700 px-10 py-3 rounded-md my-2"
+              style={{boxShadow:"0 4px 8px rgba(0, 0, 0, 0.2)", border: "1px solid black" }}
             />
-            {errors.Dinterno && <span className="text-white">El Diametro interno es obligatorio</span>}
           </div>
+            {errors.Dinterno && <span className="text-red-400 flex justify-center">El Diametro interno es obligatorio</span>}
 
-          <div className="my-3">
+          <div className="my-3 flex justify-center ">
             <input
               type="text"
-              placeholder="Especifica Diametro Externo con punto: 3.6"
+              placeholder="Pon el O/D con punto: 3.6"
               {...register("Dexterno", { required: true })}
-              className="w-full bg-zinc-300 text-gray-800 px-4 py-2 rounded-md"
+              className="w-medium bg-transparent text-gray-700 px-10 py-3 rounded-md my-2  "
+              style={{boxShadow:"0 4px 8px rgba(0, 0, 0, 0.2)", border: "1px solid black" }}
             />
-            {errors.Dexterno && <span className="text-white">El Diametro externo es obligatorio</span>}
+          </div>
+            {errors.Dexterno && <span className="text-red-400 flex justify-center ">El Diametro externo es obligatorio</span>}
+
+          <div className='font-bold py-3 m-4' >
+            <button type="submit" >
+              GENERAR CONSULTA
+            </button>
           </div>
 
-          <button type="submit" className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-3">
-            GENERAR CONSULTA
-          </button>
         </form>
 
-        <div className='bg-zinc-500 max-w-md w-full p-10 rounded-md'>
-          <h1 className='text-gray-800 text-2xl font-bold text-center' style={{ boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)" }}>
-            Resultado de la consulta
-          </h1>
+        {/* CALCULADORA */}
 
-          {currentItems.map((medida, i) => (
-            <div key={i} className="w-full bg-zinc-600 text-white px-4 py-2 rounded-md my-3">
-              <span className='text-gray-800 text-2xl font-bold'>Datos de Oring</span>
-              <ul>
-              <li>Descripción: <span className="shadow underline"> {medida.DESCRIPCIÓN}</span></li>
-              <li>Identificador: {medida.ID}</li>
-              <li>Compuesto: <span className="shadow underline">{medida.CodigoCompu}</span></li>
-              <li>Espesor: {medida.Espesor}</li>
-              <li>Dimetro Interno: {medida.Dinterno}</li>
-              <li>Diametro externo: {medida.Dexterno}</li>
-              <li>Identificador Molde: {medida.Idmolde}</li>
-              <li>{medida.Medidas}</li>
-              <li>Tamaño molde: {medida.Mtamaño}</li>
-              <li># Cavidades: {medida.Ncavidades}</li>
-              <li># Placas: {medida.Nplacas}</li>
-              <li>Patin: {medida.Patin}</li>
-              <li>Peso gr: {medida.Pesogr}</li>
-              <li>Precio P: {medida.PrecioProducir}</li>
-              <li>Tipo maquinas: {medida.TMaquina}</li>
-              <li>Tipo molde: {medida.TMolde}</li>
-              <li>Tipo Proceso: {medida.TProceso}</li>
-              <li>Tipo distribución: {medida.Tdistribucion}</li>
-              <li>Identificador DB: {medida._id}</li>
-              </ul>
-            </div>
-          ))}
+      <div className="mt-3 px-2 flex flex-col items-left  py-3 bg-zinc-100 rounded-md"
+            style={{ boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)" }}>
+          <h2 className="text-gray-800 text-2xl font-bold text-center mb-3  "
+          
+          >Calcular valor de O-ring
+          </h2>
 
-          {/* Paginación */}
-          <ul className="flex justify-center">
-            {Array(Math.ceil(medidasOring.length / itemsPerPage)).fill().map((_, i) => (
-              <li key={i} className="cursor-pointer mx-1" onClick={() => paginate(i + 1)}>
-                {i + 1}
-              </li>
-            ))}
-          </ul>
+        <div className="grid grid-cols-3 gap-9 py-3">
+
+          <div className="flex flex-col items-start">
+            {/* <label htmlFor="DI" className="text-sm mb-2">I/D m.m :</label> */}
+            <input type="number" id="DI" name="DI" value={calculatedValues.DI} onChange={handleChange} 
+            className="w-20 border border-gray-300 rounded-md px-2 py-1 text-black " 
+            style={{boxShadow:"0 4px 8px rgba(0, 0, 0, 0.2)", border: "1px solid black" }}
+            placeholder='    I/D'/>
+          </div>
+
+          <div className="flex flex-col items-center ">
+            {/* <label htmlFor="DE" className="text-sm mb-2">O/D m.m :</label> */}
+            <input type="number" id="DE" name="DE" value={calculatedValues.DE} onChange={handleChange} 
+            className="w-20 border border-gray-300 rounded-md px-2 py-1 text-black" 
+            style={{boxShadow:"0 4px 8px rgba(0, 0, 0, 0.2)", border: "1px solid black" }}
+            placeholder='    O/D'/>
+          </div>
+
+          <div className="flex flex-col  items-end ">
+            {/* <label htmlFor="CS" className="text-sm mb-2 text-black ">W m.m :</label> */}
+            <input type="number" id="CS" name="CS" value={calculatedValues.CS} onChange={handleChange} 
+            className="w-20 border border-gray-300 rounded-md px-2 py-1" 
+            style={{boxShadow:"0 4px 8px rgba(0, 0, 0, 0.2)", border: "1px solid black" }}
+            placeholder='      W'/>
+          </div>
+
+        </div >
+
+          <div className='flex justify-around gap-4 mt-4' >
+            <button onClick={handleCalculate} 
+              className=" font-bold mt-4 bg-gray-500 text-white px-4 py-2 rounded-md w-30">
+              Calcular
+            </button>
+
+            <button onClick={resetCalculator} 
+              className='font-bold mt-4  bg-gray-500 text-white px-4 py-2 rounded-md w-30' >
+              Limpiar
+            </button>
+          </div>
+          
+         
+         {/* <div className='flex justify-center' >
+          <button onClick={resetCalculator} 
+            className='font-bold mt-4  bg-gray-500 text-white px-4 py-2 rounded-md w-30' >
+            Limpiar
+          </button>
+         </div> */}
+         
+          
+      </div>
+
+
+      </div>
+        <div className='bg-zinc-100 max-w-7xl w-medium p-7 rounded-md mt-10'>
+
+          <div className='flex justify-center' >
+            <h1 className='text-gray-800 text-2xl font-bold text-center bg-zinc-200 w-80 py-2 ' style={{ boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)" }}>
+              Resultado de la consulta
+            </h1>
+          </div>
+        
+
+        <div className="overflow-x-auto mt-2 "
+        style={{ boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)" }}>
+          <table className="min-w-full bg-zinc-100 text-white mx-auto ">
+            <thead>
+              <tr className="bg-zinc-600">
+                <th className="px-4 py-2">Descripción</th>
+                <th className="px-4 py-2">Codigo</th>
+                <th className="px-4 py-2">Compuesto</th>
+                <th className="px-4 py-2">W m.m</th>
+                <th className="px-4 py-2">I/D m.m</th>
+                <th className="px-4 py-2">O/D m.m</th>
+                <th className="px-4 py-2">ID mold</th>
+                <th className="px-4 py-2">T Mold cm</th>
+                <th className="px-4 py-2"># Cavidades</th>
+                <th className="px-4 py-2"># Placas</th>
+                <th className="px-4 py-2">Patin</th>
+                <th className="px-4 py-2">Peso gr</th>
+                <th className="px-4 py-2">Precio P</th>
+                <th className="px-4 py-2">Tipo maquinas</th>
+                <th className="px-4 py-2">Tipo molde</th>
+                <th className="px-4 py-2">Tipo Proceso</th>
+                <th className="px-4 py-2">Tipo distribución</th>
+                {/* <th className="px-4 py-2">Identificador DB</th> */}
+              </tr>
+            </thead>
+            <tbody>
+              {currentItems.map((medida, i) => (
+                <tr key={i} className="bg-zinc-500">
+                  <td className="border px-4 py-2">{medida.DESCRIPCIÓN}</td>
+                  <td className="border px-4 py-2">{medida.ID}</td>
+                  <td className="border px-4 py-2">{medida.CodigoCompu}</td>
+                  <td className="border px-4 py-2">{medida.Espesor}</td>
+                  <td className="border px-4 py-2">{medida.Dinterno}</td>
+                  <td className="border px-4 py-2">{medida.Dexterno}</td>
+                  <td className="border px-4 py-2">{medida.Idmolde}</td>
+                  <td className="border px-4 py-2">{medida.Mtamaño}</td>
+                  <td className="border px-4 py-2">{medida.Ncavidades}</td>
+                  <td className="border px-4 py-2">{medida.Nplacas}</td>
+                  <td className="border px-4 py-2">{medida.Patin}</td>
+                  <td className="border px-4 py-2">{medida.Pesogr}</td>
+                  <td className="border px-4 py-2">{medida.PrecioProducir}</td>
+                  <td className="border px-4 py-2">{medida.TMaquina}</td>
+                  <td className="border px-4 py-2">{medida.TMolde}</td>
+                  <td className="border px-4 py-2">{medida.TProceso}</td>
+                  <td className="border px-4 py-2">{medida.Tdistribucion}</td>
+                  {/* <td className="border px-4 py-2">{medida._id}</td> */}
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
+
+         Paginas 
+        <ul className="flex justify-center mt-3">
+          {Array(Math.ceil(medidasOring.length / itemsPerPage)).fill().map((_, i) => (
+            <li key={i} className="cursor-pointer mx-1 bg-zinc-700 text-white px-3 py-1 rounded-md" onClick={() => paginate(i + 1)}>
+              {i + 1}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

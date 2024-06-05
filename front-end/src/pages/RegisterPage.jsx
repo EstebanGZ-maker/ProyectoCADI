@@ -1,22 +1,15 @@
 import  { useForm }  from "react-hook-form"; 
 import { useAuth } from "../context/AuthContext.jsx";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 
 
 function RegisterPage() {
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const {signup ,isAuthenticated, errors: registerErrors  } = useAuth(); 
-    const navigate = useNavigate(); 
+
+    const { register, handleSubmit, formState: { errors }, } = useForm();
+    const {signup , errors: registerErrors  } = useAuth(); 
     
     const onSubmit = handleSubmit(async (values) => {
       signup(values); 
     });   
-    
-    useEffect(() => {
-      if (isAuthenticated) navigate("/queryOring/query"); 
-    }, [isAuthenticated]); 
 
   return (
 
@@ -32,9 +25,6 @@ function RegisterPage() {
       }
         
         <h1 className="text-gray-800 text-2xl font-bold text-center"  > Crear una cuenta nueva </h1>
-        <p className="flex gap-x-2 justify-between text-gray-500 " >
-            ¿Ya estas registrado? {""} < Link to = "/login" className="text-sky-500 "> Accede </Link> 
-      </p>
 
       <form onSubmit = {onSubmit}>
         <input type="text" { ...register(`username`, { required: true })}
@@ -62,9 +52,18 @@ function RegisterPage() {
         /> 
         {
         errors.password && <span className="text-gray-800"> La contraseña es obligatoria </span>
-        }  
+        }
 
-        <button type="submit" className=" w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-3 " >Register</button>      
+        <label htmlFor="roles">Seleccióna un rol: </label>
+        <select  {...register("roles")} 
+          className=" w-full bg-transparent text-gray-700 px-4 py-2 rounded-md my-3 "
+          style={{boxShadow:"0 4px 8px rgba(0, 0, 0, 0.2)", border: "1px solid black" }}
+          >
+          <option value="User">Usuario</option>
+          <option value="Admin">Administrador</option>
+        </select>
+
+        <button type="submit" className=" w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-3 font-bold " >Registrar Usuario nuevo </button>      
       </form>
 
       
@@ -76,6 +75,3 @@ function RegisterPage() {
 }
 
 export default RegisterPage;
-
-
-
