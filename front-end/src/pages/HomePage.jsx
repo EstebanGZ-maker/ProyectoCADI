@@ -19,7 +19,7 @@ function HomePage() {
           <p className="text-gray-600">
             Utiliza nuestra herramienta de búsqueda avanzada para encontrar los productos que necesitas.
           </p>
-          <Link to="/productsHome" className="btn">Buscar Productos</Link>
+          <Link to="/customersHome" className="btn">Buscar Productos</Link>
         </div>
         
         <div className="card">
@@ -27,7 +27,7 @@ function HomePage() {
           <p className="text-gray-600">
             Añade nuevos productos a la base de datos de manera rápida y sencilla.
           </p>
-          <Link to="/productsHome" className="btn">Crear Productos</Link>
+          <Link to="/customersHome" className="btn">Crear Productos</Link>
         </div>
         
         <div className="card">

@@ -8,6 +8,9 @@ import OringPage  from "./pages/OringPage.jsx";
 import CreateOringPage from "./pages/CreateOringPage.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
+import CustomerQueryArandela from "./pages/CustomerQueryArandela.jsx";
+import CustomerQueryOring from "./pages/CustomerQueryOring.jsx";
+import CustomersHome from "./pages/CustomersHome.jsx";
 
 import ProtectedRoute from "./ProtectedRoute.jsx";
 import { QueryOringProvider } from "./context/QueryContext.jsx";
@@ -19,7 +22,6 @@ import CreateArandelasPage from "./pages/CreateArandelasPage.jsx";
 import ArandelasPage from "./pages/ArandelasPage.jsx";
 
 
-
 function App() {
  return (
   <AuthProvider>
@@ -29,7 +31,10 @@ function App() {
       <Navbar />
       <Routes>  
           <Route path="/" element= { < HomePage /> } /> 
-          <Route path="/login" element={<LoginPage/>} /> 
+          <Route path="/login" element={<LoginPage/>} />
+          <Route path="/customersHome" element={ <CustomersHome/>}/> 
+          <Route path="/customerQueryArandela" element={ < CustomerQueryArandela />}/>
+          <Route path="/customerQueryOring" element={ <CustomerQueryOring/>}/>  
     
         <Route element = {< ProtectedRoute />} >
           <Route path="/register" element={ <RegisterPage/> } />  
@@ -37,8 +42,8 @@ function App() {
           <Route path="/queryOring" element={ < CreateOringPage /> } />  
           <Route path="/queryArandela/query" element={ < ArandelasPage /> } />
           <Route path="/queryArandela" element={ < CreateArandelasPage /> } />
-          <Route path="/pdfPage" element={ < PdfPage /> } />
           <Route path="/productsHome" element={ < ProductsHome /> } />
+          <Route path="/pdfPage" element={ < PdfPage /> } />
 
           <Route path="/profile" element={ < ProfilePage /> } /> 
         </Route>  
