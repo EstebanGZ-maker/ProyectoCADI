@@ -10,7 +10,7 @@ router.get("/queryOring/id", authRequired , getQueryOrings)
 
 router.post("/queryOring", authRequired, requireRole(['admin']),validateSchema(createProductsSchema), createQueryOring )
 
-router.get("/queryOring/query", authRequired,  getQueryOring)
+router.get("/queryOring/query",  getQueryOring)
 
 router.delete("/queryOring/:id", authRequired, deleteQueryOring )
 

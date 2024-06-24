@@ -52,7 +52,7 @@ function ProductsHome() {
           <p className="text-gray-600">
             Utiliza nuestra herramienta de búsqueda avanzada para encontrar las arandelas que necesites.
           </p>
-          <Link to="/arandelasPage" className="btn"> Buscar Arandelas </Link>
+          <Link to="/queryArandela/query" className="btn"> Buscar Arandelas </Link>
         </div>
         
         <div className="card">
@@ -60,7 +60,7 @@ function ProductsHome() {
           <p className="text-gray-600">
             Añade nuevas arandelas a la base de datos de manera rápida y sencilla.
           </p>
-          <Link to="/createArandelas" className="btn">Crear Arandelas</Link>
+          <Link to="/queryArandela" className="btn">Crear Arandelas</Link>
         </div>
         
         <div className="card">

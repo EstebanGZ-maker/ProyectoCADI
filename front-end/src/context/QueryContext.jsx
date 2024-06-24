@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { createOringsRequest, getOringsRequest } from "../api/queryOring.js";
 
-
 const QueryOringContext = createContext(); 
 
 export const useQueryOring = () => {
@@ -34,7 +33,7 @@ export const QueryOringProvider = ({children}) => {
             console.log(error.response.status);
             console.log(error.toJSON());
         }
-    }
+    };
 
     //Obtenedor de la consulta
     const getQueryOring = async ( medidasOring) => {
@@ -47,15 +46,15 @@ export const QueryOringProvider = ({children}) => {
             console.log(res.data.message); 
             console.log(res.data.result); 
             setMedidasOring(res.data.result); 
-            setIsAuthenticated(true)
+            setIsAuthenticated(true); 
 
         } catch (error) {
-            setErrors([error.response.status])
+            setErrors([error.response.status]);
             console.log(error.response.status);
             console.log(error.toJSON());
-            setErrors(error.response.status)
+            setErrors(error.response.status); 
         }
-    }
+    };
 
         useEffect(() => {
             if (errors.length > 0) {

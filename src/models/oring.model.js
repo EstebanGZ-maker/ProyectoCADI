@@ -3,7 +3,7 @@ import mongoose from "mongoose"
 
 
 
-//Esquema de como se van a guardar los datos de los productos en la DB
+//Esquema de como se van a guardar los datos de los Orings en la DB
 const OringsSchema = new mongoose.Schema({
     ID:{
         type: String,

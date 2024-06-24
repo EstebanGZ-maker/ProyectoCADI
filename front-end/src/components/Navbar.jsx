@@ -41,7 +41,7 @@ function Navbar() {
         <Link to="/" >
           <img src={logo} width={150} alt="Logo" className='mr-4' />
         </Link>
-        <Link to="/">
+        <Link to="/productsHome">
           <h1 className='text-2xl font-bold text-white'>Query Products Manager</h1>
         </Link>
       </div>

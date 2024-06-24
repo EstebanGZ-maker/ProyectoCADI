@@ -11,9 +11,8 @@ import ProfilePage from "./pages/ProfilePage.jsx";
 
 import ProtectedRoute from "./ProtectedRoute.jsx";
 import { QueryOringProvider } from "./context/QueryContext.jsx";
+import { QueryArandelaProvider } from "./context/ArandelaContext.jsx";
 import Navbar from "./components/Navbar.jsx";
-import ViewCreateOring from "./pages/ViewCreateOring.jsx";
-import ViewQueryOring  from "./pages/ViewQueryOring.jsx";
 import PdfPage from "./pages/PdfPage.jsx";
 import ProductsHome from "./pages/ProductsHome.jsx";
 import CreateArandelasPage from "./pages/CreateArandelasPage.jsx";
@@ -25,28 +24,28 @@ function App() {
  return (
   <AuthProvider>
   <QueryOringProvider>
-  <BrowserRouter>
-    <Navbar />
-    <Routes>  
-        <Route path="/" element= { < HomePage /> } /> 
-        <Route path="/login" element={<LoginPage/>} /> 
-  
-      <Route element = {< ProtectedRoute />} >
-        <Route path="/register" element={ <RegisterPage/> } />  
-        <Route path="/queryOring" element={ < CreateOringPage /> } />  
-        <Route path="/queryOring/query" element={ < OringPage /> } /> 
-        <Route path="/createArandelas" element={ < CreateArandelasPage /> } />
-        <Route path="/arandelasPage" element={ < ArandelasPage /> } />
-        <Route path="/pdfPage" element={ < PdfPage /> } />
-        <Route path="/productsHome" element={ < ProductsHome /> } />
-        <Route path="/viewCreateOring" element={ < ViewCreateOring /> } />
-        <Route path="/viewQueryOring" element={ < ViewQueryOring /> } /> 
-
-        <Route path="/profile" element={ < ProfilePage /> } /> 
-      </Route>  
+  <QueryArandelaProvider>
+    <BrowserRouter>
+      <Navbar />
+      <Routes>  
+          <Route path="/" element= { < HomePage /> } /> 
+          <Route path="/login" element={<LoginPage/>} /> 
     
-    </Routes>
-  </BrowserRouter>
+        <Route element = {< ProtectedRoute />} >
+          <Route path="/register" element={ <RegisterPage/> } />  
+          <Route path="/queryOring/query" element={ < OringPage /> } /> 
+          <Route path="/queryOring" element={ < CreateOringPage /> } />  
+          <Route path="/queryArandela/query" element={ < ArandelasPage /> } />
+          <Route path="/queryArandela" element={ < CreateArandelasPage /> } />
+          <Route path="/pdfPage" element={ < PdfPage /> } />
+          <Route path="/productsHome" element={ < ProductsHome /> } />
+
+          <Route path="/profile" element={ < ProfilePage /> } /> 
+        </Route>  
+      
+      </Routes>
+    </BrowserRouter>
+  </QueryArandelaProvider>
   </QueryOringProvider>
   </AuthProvider>  
 

@@ -6,7 +6,7 @@ import { registerSchema, loginSchema } from "../schemas/auth.schema.js";
 
 const router = Router();
 
-router.post("/register", authRequired, requireRole(['Admin']), validateSchema(registerSchema), register);
+router.post("/register", authRequired, requireRole(['admin']), validateSchema(registerSchema), register);
 
 router.post("/login", validateSchema(loginSchema) ,login );
 

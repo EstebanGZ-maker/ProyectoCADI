@@ -19,7 +19,7 @@ function QueryOringPage() {
     data.Dexterno = parseFloat(data.Dexterno);
     data.Dinterno = parseFloat(data.Dinterno);
     getQueryOring(data);
-    setSuccessMessage('Consulta realizada con éxito.');
+    setSuccessMessage('¡Consulta realizada con éxito!');
   });
 
   const handleCalculate = () => {
@@ -61,11 +61,13 @@ function QueryOringPage() {
     <div className="mt-20 flex flex-col items-center data-container">
       <div className='bg-zinc-200 max-w-lg w-full p-10 rounded-md contenedor '>
         
-        {getQueryOringErrors && getQueryOringErrors.length > 0 && (
+        {getQueryOringErrors && getQueryOringErrors.length > 0 && 
+          (
           <div className='bg-red-500 p-2 text-white text-center my-3'>
             {getQueryOringErrors.join(', ')}
           </div>
-        )}
+          )
+        }
 
         {successMessage && (
           <div className='bg-green-700 p-2 text-white text-center my-3'>
@@ -131,26 +133,26 @@ function QueryOringPage() {
 
           <div className="flex flex-col items-start">
             {/* <label htmlFor="DI" className="text-sm mb-2">I/D m.m :</label> */}
-            <input type="number" id="DI" name="DI" value={calculatedValues.DI} onChange={handleChange} 
-            className="w-20 border border-gray-300 rounded-md px-2 py-1 text-black " 
-            style={{boxShadow:"0 4px 8px rgba(0, 0, 0, 0.2)", border: "1px solid black" }}
-            placeholder='    I/D'/>
+              <input type="number" id="DI" name="DI" value={calculatedValues.DI} onChange={handleChange} 
+              className="w-20 border border-gray-300 rounded-md px-2 py-1 text-black " 
+              style={{boxShadow:"0 4px 8px rgba(0, 0, 0, 0.2)", border: "1px solid black" }}
+              placeholder='    I/D'/>
           </div>
 
           <div className="flex flex-col items-center ">
             {/* <label htmlFor="DE" className="text-sm mb-2">O/D m.m :</label> */}
-            <input type="number" id="DE" name="DE" value={calculatedValues.DE} onChange={handleChange} 
-            className="w-20 border border-gray-300 rounded-md px-2 py-1 text-black" 
-            style={{boxShadow:"0 4px 8px rgba(0, 0, 0, 0.2)", border: "1px solid black" }}
-            placeholder='    O/D'/>
+              <input type="number" id="DE" name="DE" value={calculatedValues.DE} onChange={handleChange} 
+              className="w-20 border border-gray-300 rounded-md px-2 py-1 text-black" 
+              style={{boxShadow:"0 4px 8px rgba(0, 0, 0, 0.2)", border: "1px solid black" }}
+              placeholder='    O/D'/>
           </div>
 
           <div className="flex flex-col  items-end ">
-            {/* <label htmlFor="CS" className="text-sm mb-2 text-black ">W m.m :</label> */}
-            <input type="number" id="CS" name="CS" value={calculatedValues.CS} onChange={handleChange} 
-            className="w-20 border border-gray-300 rounded-md px-2 py-1" 
-            style={{boxShadow:"0 4px 8px rgba(0, 0, 0, 0.2)", border: "1px solid black" }}
-            placeholder='      W'/>
+              {/* <label htmlFor="CS" className="text-sm mb-2 text-black ">W m.m :</label> */}
+                <input type="number" id="CS" name="CS" value={calculatedValues.CS} onChange={handleChange} 
+                className="w-20 border border-gray-300 rounded-md px-2 py-1" 
+                style={{boxShadow:"0 4px 8px rgba(0, 0, 0, 0.2)", border: "1px solid black" }}
+                placeholder='      W'/>
           </div>
 
         </div >
@@ -168,29 +170,29 @@ function QueryOringPage() {
           </div>
           
          
-         {/* <div className='flex justify-center' >
+         {/* OTRA OPCION DE LOS BOTONES 
+         <div className='flex justify-center' >
           <button onClick={resetCalculator} 
             className='font-bold mt-4  bg-gray-500 text-white px-4 py-2 rounded-md w-30' >
             Limpiar
           </button>
          </div> */}
          
-          
-      </div>
-
+        </div> {/* div de la calculadora */}
 
       </div>
+
         <div className='bg-zinc-100 max-w-7xl w-medium p-7 rounded-md mt-10'>
 
           <div className='flex justify-center' >
-            <h1 className='text-gray-800 text-2xl font-bold text-center bg-zinc-200 w-80 py-2 ' style={{ boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)" }}>
+            <h1 className='text-gray-800 text-2xl font-bold text-center bg-zinc-200 w-80 py-2 ' 
+                style={{ boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)" }}>
               Resultado de la consulta
             </h1>
           </div>
         
 
-        <div className="overflow-x-auto mt-2 "
-        style={{ boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)" }}>
+        <div className="overflow-x-auto mt-2 " style={{ boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)" }}>
           <table className="min-w-full bg-zinc-100 text-white mx-auto ">
             <thead>
               <tr className="bg-zinc-600">

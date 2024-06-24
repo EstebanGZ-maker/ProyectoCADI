@@ -38,7 +38,7 @@ export const createQueryOring = async (req, res) => {
 };
 
 //Obtener todos los orings almacenados
-export const getQueryOrings = async (req, res) => {
+export const getQueryOrings = async ( res) => {
 
     const queryOrings = await OringsData.find()
     res.json(queryOrings)

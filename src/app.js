@@ -9,6 +9,7 @@ import cors from "cors"
 
 import authRoutes from "./routes/auth.routes.js"
 import queryOringRoutes  from "./routes/queryOring.routes.js"
+import arandelasRoutes from "./routes/arandelas.routes.js";
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(authRoutes);
-app.use(queryOringRoutes)
+app.use(queryOringRoutes);
+app.use(arandelasRoutes);
 
 export default app;
