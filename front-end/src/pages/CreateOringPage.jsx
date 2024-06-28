@@ -1,38 +1,64 @@
-import { React } from "react";
+import { React, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useQueryOring } from "../context/QueryContext";
 
 function CreateOringPage() {
 
   const {register, handleSubmit, formState: {errors}, } = useForm();
-  const { createQueryOring, errors: createQueryOringsError } = useQueryOring(); 
+  const { createQueryOring, errors: createQueryOringsError } = useQueryOring();
+  const [ successMessage, setsuccessMessage ] = useState('') 
+  const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+ 
+  const onSubmit = handleSubmit( async (data) => {
 
-  const onSubmit = handleSubmit((data) => {
+    try {
+      if (isNaN(data.Espesor) || isNaN(data.Dexterno) || isNaN(data.Dinterno) || isNaN(data.PesoGr) || isNaN(data.PrecioProducir) || isNaN(data.PrecioVenta) ) {
+        throw new Error('Todas las entradas deben ser números válidos');
+      }
 
-    data.Espesor = parseFloat(data.Espesor);
-    data.Dexterno = parseFloat(data.Dexterno);
-    data.Dinterno = parseFloat(data.Dinterno);
-    data.PesoGr = parseFloat(data.PesoGr);
-    data.PrecioProducir = parseFloat(data.PrecioProducir);
-    data.PrecioVenta = parseFloat(data.PrecioVenta);
-    /* data.Tmaquina.toString(data.Tmaquina); */
-     
-    console.log(data); 
-    createQueryOring(data);
+      data.Espesor = parseFloat(data.Espesor);
+      data.Dexterno = parseFloat(data.Dexterno);
+      data.Dinterno = parseFloat(data.Dinterno);
+      data.PesoGr = parseFloat(data.PesoGr);
+      data.PrecioProducir = parseFloat(data.PrecioProducir);
+      data.PrecioVenta = parseFloat(data.PrecioVenta);
+      
+      setLoading(true);
+      await createQueryOring(data);
+      setLoading(false);
+      setsuccessMessage('¡Productos agregados con éxito!')
+      setErrorMessage('');
+
+    } catch (error) {
+      setLoading(false);
+      setErrorMessage(error.message);
+      setsuccessMessage(''); 
+    }
   }); 
 
   return (
     
     <div className=" mt-20 flex flex-col items-center data-container " >
-      
      
-
       <div className="bg-zinc-200 max-w-lg w-full p-10 rounded-md contenedor " >
       {createQueryOringsError.map(( error , i) => (
         <div className=" bg-red-500 p-2 text-white text-center my-3 " key={i} >
           {error}
         </div>))
       }
+
+          {errorMessage && 
+          <div className='bg-red-500 p-2 text-white text-center my-3'>
+            {errorMessage}
+          </div>
+        }
+
+          {successMessage && (
+          <div className='bg-green-700 p-2 text-white text-center my-3'>
+            {successMessage}
+          </div>
+        )}
 
       <h1 className="  text-gray-800 text-2xl font-bold text-center">SUBIR DATOS PARA ORINGS</h1>
 

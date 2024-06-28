@@ -60,6 +60,8 @@ function QueryOringPage() {
       DI = parseFloat(calculatedValues.DE) - (2 * parseFloat(calculatedValues.CS));
     }
 
+    console.log(medidas); 
+
     setCalculatedValues({ 
       ...calculatedValues, 
       DE: DE !== undefined ? DE.toFixed(2) : calculatedValues.DE, 
@@ -247,7 +249,7 @@ function QueryOringPage() {
           </tr>
         </thead>
       <tbody>
-        {currentItems.map((medida, i) => (
+        {currentItems.map((medida, i) => (  
           <tr key={i} className="bg-zinc-500">
             <td className="border px-4 py-2">{medida.DESCRIPCIÓN}</td>
             <td className="border px-4 py-2">{medida.ID}</td>

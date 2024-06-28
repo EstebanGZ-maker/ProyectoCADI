@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useQueryArandela } from "../context/ArandelaContext.jsx";
 
@@ -6,22 +6,49 @@ function CreateArandelasPage() {
 
   const { register, handleSubmit, formState: {errors} } = useForm(); 
   const { createQueryArandela, errors: createQueryArandelaErrors } = useQueryArandela(); 
+  const [ successMessage, setsuccessMessage ] = useState('') 
+  const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = handleSubmit( async (data) => {
+    try {
+      if (isNaN(data.W) || isNaN(data.Dexterno) || isNaN(data.Dinterno) || isNaN(data.ID) ) {
+        throw new Error('Todas las entradas deben ser números válidos');
+      }
+      
+      data.ID = parseFloat(data.ID);
+      data.W = parseFloat(data.W);
+      data.Dexterno = parseFloat(data.Dexterno);
+      data.Dinterno = parseFloat(data.Dinterno); 
 
-    data.ID = parseFloat(data.ID);
-    data.W = parseFloat(data.W);
-    data.Dexterno = parseFloat(data.Dexterno);
-    data.Dinterno = parseFloat(data.Dinterno); 
-    
-    createQueryArandela(data)
+      setLoading(true);
+      await createQueryArandela(data);
+      setLoading(false);
+      setsuccessMessage('¡Productos creados con éxito!')
+      setErrorMessage('');
+
+    } catch (error) {
+      setLoading(false);
+      setErrorMessage(error.message);
+      setsuccessMessage(''); 
+    }
   });
 
   return (
     <div className=" mt-20 flex flex-col items-center data-container " > 
       <div className="bg-zinc-200 max-w-lg w-full p-10 rounded-md contenedor " >
 
+      {errorMessage && 
+          <div className='bg-red-500 p-2 text-white text-center my-3'>
+            {errorMessage}
+          </div>
+        }
 
+      {successMessage && (
+          <div className='bg-green-700 p-2 text-white text-center my-3'>
+            {successMessage}
+          </div>
+        )}
 
         <h1 className="  text-gray-800 text-2xl font-bold text-center" >SUBIR DATOS DE LAS ARANDELAS</h1>
 
@@ -49,7 +76,7 @@ function CreateArandelasPage() {
           style={{boxShadow:"0 4px 8px rgba(0, 0, 0, 0.2)", border: "1px solid black" }}
           />
         </div>
-        {errors.ID && <span className='text-red-400 flex justify-center' > La descripción es obligatoria </span> }
+        {errors.Description && <span className='text-red-400 flex justify-center' > La descripción es obligatoria </span> }
 
           {/* Compuesto */}
        <div className="my-3 flex justify-center" >
@@ -61,7 +88,7 @@ function CreateArandelasPage() {
           style={{boxShadow:"0 4px 8px rgba(0, 0, 0, 0.2)", border: "1px solid black" }}
           />
         </div>
-        {errors.ID && <span className='text-red-400 flex justify-center' > El compuesto es obligatorio </span> }
+        {errors.Compuesto && <span className='text-red-400 flex justify-center' > El compuesto es obligatorio </span> }
 
           {/* W */}
        <div className="my-3 flex justify-center" >
@@ -73,7 +100,7 @@ function CreateArandelasPage() {
           style={{boxShadow:"0 4px 8px rgba(0, 0, 0, 0.2)", border: "1px solid black" }}
           />
         </div>
-        {errors.ID && <span className='text-red-400 flex justify-center' > El espesor es obligatorio </span> }
+        {errors.W && <span className='text-red-400 flex justify-center' > El espesor es obligatorio </span> }
 
           {/* Dinterno */}
        <div className="my-3 flex justify-center" >
@@ -85,7 +112,7 @@ function CreateArandelasPage() {
           style={{boxShadow:"0 4px 8px rgba(0, 0, 0, 0.2)", border: "1px solid black" }}
           />
         </div>
-        {errors.ID && <span className='text-red-400 flex justify-center' > El Diametro interno es obligatorio </span> }
+        {errors.Dinterno && <span className='text-red-400 flex justify-center' > El Diametro interno es obligatorio </span> }
 
         {/* Dexterno */}
        <div className="my-3 flex justify-center" >
@@ -97,7 +124,7 @@ function CreateArandelasPage() {
           style={{boxShadow:"0 4px 8px rgba(0, 0, 0, 0.2)", border: "1px solid black" }}
           />
         </div>
-        {errors.ID && <span className='text-red-400 flex justify-center' > El Diametro externo es obligatorio </span> }
+        {errors.Dexterno && <span className='text-red-400 flex justify-center' > El Diametro externo es obligatorio </span> }
 
         {/* Peso */}
        <div className="my-3 flex justify-center" >
@@ -215,18 +242,18 @@ function CreateArandelasPage() {
           <input 
           type="text" 
           placeholder='Nombre del plano '
-          {...register("PDF")}
+          {...register("PDF", { required: true})}
           className="w-medium bg-transparent text-gray-700 px-10 py-3 rounded-md my-2 "
           style={{boxShadow:"0 4px 8px rgba(0, 0, 0, 0.2)", border: "1px solid black" }}
           />
         </div>
-
-        {createQueryArandelaErrors.map(( error, i) =>(
-        <div className=" bg-red-500 p-2 text-white text-center my-3 " key={i} >
-          {error}
-        </div>
-       ))
-       }
+        {errors.PDF && <span className='text-red-400 flex justify-center' > El rango del PDF es obligatorio </span> }
+        
+          {createQueryArandelaErrors.map(( error, i) =>(
+          <div className=" bg-red-500 p-2 text-white text-center my-3 " key={i} >
+            {error}
+          </div>))
+          }
           
         <div className="my-3 flex justify-center" >
           <button className=" w-medium bg-green-500 text-white px-4 py-2 rounded-md my-3" >

@@ -74,7 +74,10 @@ export const getQueryOring = async (req, res) => {
            updatedAt: oringFound.updatedAt, 
         });
       } else {
-        res.json({ success: false, message: "No se encontraron orings con las variables especificadas" });
+        res.json({ success: false, 
+            message: "No se encontraron orings con las variables especificadas" ,
+            result: oringFound
+        });
       }
     } catch (error) {
       res.status(500).json({ success: false, message: error.message });
