@@ -13,7 +13,7 @@ function ArandelasPage() {
   const [calculatedValues, setCalculatedValues] = useState({ DI: '', DE: '', CS: '' });
 
   useEffect(() => {
-    getQueryArandela();
+    fechData();
   }, []);
 
   const fechData = async () => {
@@ -40,7 +40,7 @@ function ArandelasPage() {
       await getQueryArandela(data);
       setLoading(false);
       setSuccessMessage('¡Consulta realizada con éxito!');
-      setErrorMessage('')
+      setErrorMessage(''); 
 
     } catch (error) {
       setLoading(false);
@@ -94,12 +94,13 @@ function ArandelasPage() {
           {errorMessage}
         </div>
         }
-
+        
         {getQueryArandelasErrors && getQueryArandelasErrors.length > 0 && (
           <div className='bg-red-500 p-2 text-white text-center my-3'>
             {getQueryArandelasErrors.join(', ')}
           </div>
         )}
+
 
         {successMessage && (
           <div className='bg-green-700 p-2 text-white text-center my-3'>

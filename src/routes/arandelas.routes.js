@@ -8,9 +8,9 @@ const router = Router()
 
 router.get("/queryArandelas/id", authRequired, getArandelas);
 
-router.post("/queryArandela", /* authRequired, requireRole(['user']) ,validateSchema(createSchemaArandelas) */  createArandelas)
+router.post("/queryArandela", authRequired, requireRole(['admin']) ,validateSchema(createSchemaArandelas),   createArandelas)
 
-router.get("/queryArandela/query", authRequired, getArandela);
+router.get("/queryArandela/query",  getArandela);
 
 router.delete("/queryArandelas/id", authRequired, deleteArandela); 
 

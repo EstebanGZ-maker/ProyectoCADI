@@ -7,20 +7,46 @@ function CustomerQueryArandela() {
   const { getQueryArandela, medidasArandela, errors: getQueryArandelasErrors } = useQueryArandela(); 
   const [currentPage, setCurrentPage] = useState(1); 
   const [itemsPerPage] = useState(5); 
-  const [successMessage, setSuccessMessage] = useState(""); 
-  const [calculatedValues, setCalculatedValues] = useState({ DI: '', DE: '', CS: '' }); 
+  const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [calculatedValues, setCalculatedValues] = useState({ DI: '', DE: '', CS: '' });
 
   useEffect(() => {
-    getQueryArandela();
+    fechData();
   }, []);
 
-  const onSubmit = handleSubmit((data) => {
-    data.W = parseFloat(data.W); 
-    data.Dexterno = parseFloat(data.Dexterno); 
-    data.Dinterno = parseFloat(data.Dinterno); 
+  const fechData = async () => {
+    setLoading(true);
+    await getQueryArandela();
+    setLoading(false);
+  };
 
-    getQueryArandela(data);
-    setSuccessMessage("¡Consulta realizada con éxito!")
+  const onSubmit = handleSubmit( async (data) => {
+    try {
+      if (data.W === undefined || data.Dinterno === undefined || data.Dexterno === undefined ) {
+         throw new Error ('Todas las propiedades son obligatorias');   
+      }
+      
+      data.W = parseFloat(data.W); 
+      data.Dexterno = parseFloat(data.Dexterno); 
+      data.Dinterno = parseFloat(data.Dinterno); 
+
+      if (isNaN(data.W) || isNaN(data.Dexterno) || isNaN(data.Dinterno) ) {
+        throw new Error('Todas las entradas deben ser números válidos');
+      }
+
+      setLoading(true);
+      await getQueryArandela(data);
+      setLoading(false);
+      setSuccessMessage('¡Consulta realizada con éxito!');
+      setErrorMessage(''); 
+
+    } catch (error) {
+      setLoading(false);
+      setErrorMessage(error.message);
+      setSuccessMessage('');
+    }    
   });
 
   const handleCalculate = () => {
@@ -28,10 +54,8 @@ function CustomerQueryArandela() {
 
     if (calculatedValues.DI !== '' && calculatedValues.CS !== '' ) {
       DE = parseFloat(calculatedValues.DI) + (2 * parseFloat(calculatedValues.CS)); 
-    
     } else if (calculatedValues.DE !== '' && calculatedValues.DI !== '' ) {
-      CS = (parseFloat(calculatedValues.DE) - parseFloat(calculatedValues.DI)) / 2; 
-    
+      CS = (parseFloat(calculatedValues.DE) - parseFloat(calculatedValues.DI)) / 2;     
     } else if (calculatedValues.DE !== '' && calculatedValues.CS !== '' ) {
       DI = parseFloat(calculatedValues.DE) - (2 * parseFloat(calculatedValues.CS)); 
     }
@@ -64,11 +88,19 @@ function CustomerQueryArandela() {
   return (
     <div className="mt-20 flex flex-col items-center data-container">
       <div className='bg-zinc-200 max-w-lg w-full p-10 rounded-md contenedor'>
+
+        {errorMessage && 
+        <div className='bg-red-500 p-2 text-white text-center my-3'>
+          {errorMessage}
+        </div>
+        }
+        
         {getQueryArandelasErrors && getQueryArandelasErrors.length > 0 && (
           <div className='bg-red-500 p-2 text-white text-center my-3'>
             {getQueryArandelasErrors.join(', ')}
           </div>
         )}
+
 
         {successMessage && (
           <div className='bg-green-700 p-2 text-white text-center my-3'>
@@ -162,7 +194,7 @@ function CustomerQueryArandela() {
                 </button>  
 
                 <button onClick={resetCalculator} 
-                  className='font-bold mt-4  bg-gray-500 text-white px-4 py-2 rounded-md w-30'>
+                  className='font-bold mt-4  bg-red-500 text-white px-4 py-2 rounded-md w-30'>
                     Limpiar 
                 </button>
               </div>
@@ -186,12 +218,12 @@ function CustomerQueryArandela() {
               <tr className="bg-zinc-600">
                 <th className="px-4 py-2">Descripción</th>
                 <th className="px-4 py-2">Codigo</th>
-                {/* <th className="px-4 py-2">Compuesto</th> */}
+                <th className="px-4 py-2">Compuesto</th>
                 <th className="px-4 py-2">W m.m</th>
                 <th className="px-4 py-2">O/D m.m</th>
                 <th className="px-4 py-2">I/D m.m</th>
                 <th className="px-4 py-2">Peso gr</th>
-                {/* <th className="px-4 py-2">TMold cm</th>
+                <th className="px-4 py-2">TMold cm</th>
                 <th className="px-4 py-2"># Cavidades</th>
                 <th className="px-4 py-2"># Placas</th> 
                 <th className="px-4 py-2">Patin</th>
@@ -199,7 +231,7 @@ function CustomerQueryArandela() {
                 <th className="px-4 py-2">Linea</th>
                 <th className="px-4 py-2">Maquinas</th>
                 <th className="px-4 py-2">Tipo Proceso</th>
-                <th className="px-4 py-2">PDF</th> */}
+                <th className="px-4 py-2">PDF</th>
               </tr>
             </thead>
             <tbody>
@@ -207,12 +239,12 @@ function CustomerQueryArandela() {
                 <tr key={i} className="bg-zinc-500 text-center">
                   <td className="border py-2">{medida.Description}</td>
                   <td className="border px-4 py-2">{medida.ID}</td>
-                  {/* <td className="border px-4 py-2">{medida.Compuesto}</td> */}
+                  <td className="border px-4 py-2">{medida.Compuesto}</td>
                   <td className="border px-4 py-2">{medida.W}</td>
                   <td className="border px-4 py-2">{medida.Dexterno}</td>
                   <td className="border px-4 py-2">{medida.Dinterno}</td>
                   <td className="border px-4 py-2">{medida.Peso}</td>
-                  {/* <td className="border px-4 py-2">{medida.MoldTamaño}</td>
+                  <td className="border px-4 py-2">{medida.MoldTamaño}</td>
                   <td className="border px-4 py-2">{medida.Ncavidades}</td>
                   <td className="border px-4 py-2">{medida.Nplacas}</td> 
                   <td className="border px-4 py-2">{medida.Patin}</td>
@@ -220,7 +252,7 @@ function CustomerQueryArandela() {
                   <td className="border px-4 py-2">{medida.Linea}</td>
                   <td className="border py-2">{medida.Tmaquina}</td>
                   <td className="border px-4 py-2">{medida.TProceso}</td>
-                  <td className="border py-2">{medida.PDF}</td> */}
+                  <td className="border py-2">{medida.PDF}</td>
                 </tr>
               ))}
             </tbody>

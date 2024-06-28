@@ -20,6 +20,8 @@ export const QueryArandelaProvider = ({children}) => {
     const [medidasArandela, setMedidasArandela] = useState([]); 
     const [isAuthenticated, setIsAuthenticated] = useState(false); 
     const [errors, setErrors] = useState([]);
+    const [loading, setLoading] = useState(true);
+
 
     //CREADOR DE ARANDELAS 
 
@@ -77,6 +79,7 @@ export const QueryArandelaProvider = ({children}) => {
                 createArandela,
                 medidasArandela,
                 isAuthenticated,
+                loading,
                 errors
             }}    
         >

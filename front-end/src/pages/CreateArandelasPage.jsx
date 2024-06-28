@@ -9,9 +9,10 @@ function CreateArandelasPage() {
 
   const onSubmit = handleSubmit((data) => {
 
-    data.w = parseFloat(data.w)
+    data.ID = parseFloat(data.ID);
+    data.W = parseFloat(data.W);
     data.Dexterno = parseFloat(data.Dexterno);
-    data.Dinterno = parseFloat(data.Dinterno)
+    data.Dinterno = parseFloat(data.Dinterno); 
     
     createQueryArandela(data)
   });
@@ -20,12 +21,7 @@ function CreateArandelasPage() {
     <div className=" mt-20 flex flex-col items-center data-container " > 
       <div className="bg-zinc-200 max-w-lg w-full p-10 rounded-md contenedor " >
 
-       {createQueryArandelaErrors.map(( error, i) =>(
-        <div className=" bg-red-500 p-2 text-white text-center my-3 " key={i} >
-          {error}
-        </div>
-       ))
-       }
+
 
         <h1 className="  text-gray-800 text-2xl font-bold text-center" >SUBIR DATOS DE LAS ARANDELAS</h1>
 
@@ -199,7 +195,9 @@ function CreateArandelasPage() {
         </div>
 
         {/*Tipo de procesos*/}
-        <label htmlFor="TProceso" className="my-3 flex justify-center" >Tipo de Proceso</label>
+        <label htmlFor="TProceso" className="my-3 flex justify-center"
+        typeof='string'
+        >Tipo de Proceso</label>
         <div className="my-3 flex justify-center" >
           <select  {...register("TProceso")} 
             className="w-medium bg-transparent text-gray-700 px-10 py-3 rounded-md my-2 "
@@ -222,6 +220,13 @@ function CreateArandelasPage() {
           style={{boxShadow:"0 4px 8px rgba(0, 0, 0, 0.2)", border: "1px solid black" }}
           />
         </div>
+
+        {createQueryArandelaErrors.map(( error, i) =>(
+        <div className=" bg-red-500 p-2 text-white text-center my-3 " key={i} >
+          {error}
+        </div>
+       ))
+       }
           
         <div className="my-3 flex justify-center" >
           <button className=" w-medium bg-green-500 text-white px-4 py-2 rounded-md my-3" >

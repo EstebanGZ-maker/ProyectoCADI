@@ -5,10 +5,10 @@ export const createSchemaArandelas =z.object({
     ID: z.number({
         required_error: "El ID es requerido"
     }),
-    description: z.string({
+    Description: z.string({
         required_error: "La descripción es requerida"
     }),
-    compuesto: z.string({
+    Compuesto: z.string({
         required_error: "El compuesto es requerido"
     }),
     W: z.number({
