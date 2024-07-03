@@ -11,6 +11,8 @@ function CustomerQueryArandela() {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [calculatedValues, setCalculatedValues] = useState({ DI: '', DE: '', CS: '' });
+  const [notFound, setNotFound] = useState('');
+  const [isDataFetched, setIsDataFetched] = useState(false);
 
   useEffect(() => {
     fechData();
@@ -21,6 +23,19 @@ function CustomerQueryArandela() {
     await getQueryArandela();
     setLoading(false);
   };
+
+  useEffect(() => {
+    if (isDataFetched) {
+      if (medidasArandela.length === 0) {
+        setNotFound('No se hallaron Arandelas con esas medidas');
+        setSuccessMessage('');
+      } else {
+        setSuccessMessage('¡Consulta realizada con éxito!');
+        setNotFound('');
+      }
+      setIsDataFetched(false);
+    }
+  }, [medidasArandela, isDataFetched]);
 
   const onSubmit = handleSubmit( async (data) => {
     try {
@@ -39,12 +54,13 @@ function CustomerQueryArandela() {
       setLoading(true);
       await getQueryArandela(data);
       setLoading(false);
-      setSuccessMessage('¡Consulta realizada con éxito!');
-      setErrorMessage(''); 
+      setIsDataFetched(true);
+      setErrorMessage('');
 
     } catch (error) {
       setLoading(false);
       setErrorMessage(error.message);
+      setNotFound('');
       setSuccessMessage('');
     }    
   });
@@ -100,6 +116,12 @@ function CustomerQueryArandela() {
             {getQueryArandelasErrors.join(', ')}
           </div>
         )}
+
+          {notFound && (
+          <div className='bg-red-500 p-2 text-white text-center my-3'>
+            {notFound}
+          </div>
+          )}
 
 
         {successMessage && (
@@ -212,18 +234,24 @@ function CustomerQueryArandela() {
           </h1>
         </div>
 
+        {medidasArandela.length === 0 && !loading && isDataFetched && (
+        <div className='text-red-500 text-center my-3'>
+          Productos no encontrados
+         </div>
+         )}
+
         <div className="overflow-x-auto mt-2" style={{ boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)" }}>
           <table className="min-w-full bg-zinc-100 text-white mx-auto">
             <thead>
               <tr className="bg-zinc-600">
                 <th className="px-4 py-2">Descripción</th>
                 <th className="px-4 py-2">Codigo</th>
-                <th className="px-4 py-2">Compuesto</th>
+                {/* <th className="px-4 py-2">Compuesto</th> */}
                 <th className="px-4 py-2">W m.m</th>
                 <th className="px-4 py-2">O/D m.m</th>
                 <th className="px-4 py-2">I/D m.m</th>
                 <th className="px-4 py-2">Peso gr</th>
-                <th className="px-4 py-2">TMold cm</th>
+                {/* <th className="px-4 py-2">TMold cm</th>
                 <th className="px-4 py-2"># Cavidades</th>
                 <th className="px-4 py-2"># Placas</th> 
                 <th className="px-4 py-2">Patin</th>
@@ -231,20 +259,20 @@ function CustomerQueryArandela() {
                 <th className="px-4 py-2">Linea</th>
                 <th className="px-4 py-2">Maquinas</th>
                 <th className="px-4 py-2">Tipo Proceso</th>
-                <th className="px-4 py-2">PDF</th>
+                <th className="px-4 py-2">PDF</th> */}
               </tr>
             </thead>
             <tbody>
               {currentItems.map((medida, i) => (
-                <tr key={i} className="bg-zinc-500 text-center">
+                <tr key={i} className="bg-zinc-500 ">
                   <td className="border py-2">{medida.Description}</td>
                   <td className="border px-4 py-2">{medida.ID}</td>
-                  <td className="border px-4 py-2">{medida.Compuesto}</td>
-                  <td className="border px-4 py-2">{medida.W}</td>
-                  <td className="border px-4 py-2">{medida.Dexterno}</td>
-                  <td className="border px-4 py-2">{medida.Dinterno}</td>
-                  <td className="border px-4 py-2">{medida.Peso}</td>
-                  <td className="border px-4 py-2">{medida.MoldTamaño}</td>
+                  {/* <td className="border px-4 py-2">{medida.Compuesto}</td> */}
+                  <td className="border px-4 py-2 text-center ">{medida.W}</td>
+                  <td className="border px-4 py-2 text-center ">{medida.Dexterno}</td>
+                  <td className="border px-4 py-2 text-center ">{medida.Dinterno}</td>
+                  <td className="border px-4 py-2 text-center ">{medida.Peso}</td>
+                 {/*  <td className="border px-4 py-2">{medida.MoldTamaño}</td>
                   <td className="border px-4 py-2">{medida.Ncavidades}</td>
                   <td className="border px-4 py-2">{medida.Nplacas}</td> 
                   <td className="border px-4 py-2">{medida.Patin}</td>
@@ -252,7 +280,7 @@ function CustomerQueryArandela() {
                   <td className="border px-4 py-2">{medida.Linea}</td>
                   <td className="border py-2">{medida.Tmaquina}</td>
                   <td className="border px-4 py-2">{medida.TProceso}</td>
-                  <td className="border py-2">{medida.PDF}</td>
+                  <td className="border py-2">{medida.PDF}</td> */}
                 </tr>
               ))}
             </tbody>

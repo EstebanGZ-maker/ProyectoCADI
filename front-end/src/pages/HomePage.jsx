@@ -27,15 +27,15 @@ function HomePage() {
           <p className="text-gray-600">
             Añade nuevos productos a la base de datos de manera rápida y sencilla.
           </p>
-          <Link to="/customersHome" className="btn">Crear Productos</Link>
+          <Link to="/productsHome" className="btn">Crear Productos</Link>
         </div>
         
         <div className="card">
-          <h2 className="text-2xl font-bold text-gray-800">Gestionar Cuenta</h2>
+          <h2 className="text-2xl font-bold text-gray-800">Gestionar Permisos</h2>
           <p className="text-gray-600">
-            Accede a tu perfil y ajusta la configuración de tu cuenta.
+            Accede a tu perfil y ajusta la configuración de tu cuenta, concede permisos y crea nuevas cuentas.
           </p>
-          <Link to="/account" className="btn">Gestionar Cuenta</Link>
+          <Link to="/register" className="btn">Gestionar Cuenta</Link>
         </div>
       </section>
     </div>

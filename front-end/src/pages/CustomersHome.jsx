@@ -8,7 +8,7 @@ function CustomersHome() {
     <header className="home-header">
       <h1 className="text-4xl font-bold text-center  text-gray-800 my-4">Bienvenido a Query Products Customers </h1>
       <p className="text-xl text-center  mb-8 text-gray-800">
-        Una herramienta eficiente para gestionar y consultar productos de manera fácil y rápida.
+        Una herramienta eficiente para gestionar y consultar productos de manera fácil y rápida para nuestros clientes.
       </p>
     </header>
     

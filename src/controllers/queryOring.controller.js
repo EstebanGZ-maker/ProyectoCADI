@@ -54,9 +54,9 @@ export const getQueryOring = async (req, res) => {
         
         const oringFound = await OringsData.find({ 
         $and: [
-            {Espesor: { $gte: parseFloat(Espesor) - 0.3, $lte: parseFloat(Espesor) + 0.3 }},
-            {Dexterno: { $gte: parseFloat(Dexterno) - 0.5, $lte: parseFloat(Dexterno) + 0.5 }},
-            {Dinterno: { $gte: parseFloat(Dinterno) - 0.5, $lte: parseFloat(Dinterno) + 0.5 }},
+            {Espesor: { $gte: parseFloat(Espesor) - 1.0, $lte: parseFloat(Espesor) + 1.0 }},
+            {Dexterno: { $gte: parseFloat(Dexterno) - 1.0, $lte: parseFloat(Dexterno) + 1.0 }},
+            {Dinterno: { $gte: parseFloat(Dinterno) - 1.0, $lte: parseFloat(Dinterno) + 1.0 }},
             // posibles parametros 
             //{codigoCompuesto: codigoCompuesto},
         ] 

@@ -11,6 +11,8 @@ function QueryOringPage() {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [calculatedValues, setCalculatedValues] = useState({ DI: '', DE: '', CS: '' });
+  const [notFound, setNotFound] = useState('');
+  const [isDataFetched, setIsDataFetched] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -21,6 +23,19 @@ function QueryOringPage() {
     await getQueryOring();
     setLoading(false);
   };
+
+  useEffect(() => {
+    if (isDataFetched) {
+      if (medidasOring.length === 0) {
+        setNotFound('No se hallaron O-rings con esas medidas');
+        setSuccessMessage('');
+      } else {
+        setSuccessMessage('¡Consulta realizada con éxito!');
+        setNotFound('');
+      }
+      setIsDataFetched(false);
+    }
+  }, [medidasOring, isDataFetched]);
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -39,12 +54,13 @@ function QueryOringPage() {
       setLoading(true);
       await getQueryOring(data);
       setLoading(false);
-      setSuccessMessage('¡Consulta realizada con éxito!');
+      setIsDataFetched(true);
       setErrorMessage('');
 
     } catch (error) {
       setLoading(false);
       setErrorMessage(error.message);
+      setNotFound('');
       setSuccessMessage('');
     }
   });
@@ -59,8 +75,6 @@ function QueryOringPage() {
     } else if (calculatedValues.DE !== '' && calculatedValues.CS !== '') {
       DI = parseFloat(calculatedValues.DE) - (2 * parseFloat(calculatedValues.CS));
     }
-
-    console.log(medidas); 
 
     setCalculatedValues({ 
       ...calculatedValues, 
@@ -79,7 +93,6 @@ function QueryOringPage() {
   };
 
   //Paginate
-
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = medidasOring.slice(indexOfFirstItem, indexOfLastItem);
@@ -104,13 +117,19 @@ function QueryOringPage() {
           )
         }
 
+        {notFound && (
+          <div className='bg-red-500 p-2 text-white text-center my-3'>
+            {notFound}
+          </div>
+        )}
+
         {successMessage && (
           <div className='bg-green-700 p-2 text-white text-center my-3'>
             {successMessage}
           </div>
         )}
 
-        <h1 className='text-gray-800 text-2xl font-bold text-center'>CONSULTAR O-RINGS </h1>
+        <h1 className='text-gray-800 text-2xl font-bold text-center'>CONSULTAR O-RINGS</h1>
 
         <form onSubmit={onSubmit}>
           <div className="my-3 flex justify-center">
@@ -182,7 +201,7 @@ function QueryOringPage() {
                 name="DE" 
                 value={calculatedValues.DE} 
                 onChange={handleChange} 
-                className="w-20 border border-gray-300 rounded-md px-2 py-1 text-black" 
+                className="w-20 border border-gray-300 rounded-md px-2 py-1" 
                 style={{ boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", border: "1px solid black" }}
                 placeholder='O/D'
               />
@@ -223,6 +242,12 @@ function QueryOringPage() {
         Resultado de la consulta
       </h1>
     </div>
+
+    {medidasOring.length === 0 && !loading && isDataFetched && (
+      <div className='text-red-500 text-center my-3'>
+        Productos no encontrados
+      </div>
+    )}
 
     <div className="overflow-x-auto mt-2 " style={{ boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)" }}>
       <table className="min-w-full bg-zinc-100 text-white mx-auto ">

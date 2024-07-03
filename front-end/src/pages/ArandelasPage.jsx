@@ -11,6 +11,8 @@ function ArandelasPage() {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [calculatedValues, setCalculatedValues] = useState({ DI: '', DE: '', CS: '' });
+  const [notFound, setNotFound] = useState('');
+  const [isDataFetched, setIsDataFetched] = useState(false);
 
   useEffect(() => {
     fechData();
@@ -21,6 +23,19 @@ function ArandelasPage() {
     await getQueryArandela();
     setLoading(false);
   };
+
+  useEffect(() => {
+      if (isDataFetched) {
+        if (medidasArandela.length === 0) {
+          setNotFound('No se hallaron Arandelas con esas medidas');
+          setSuccessMessage('');
+        } else {
+          setSuccessMessage('¡Consulta realizada con éxito!');
+          setNotFound('');
+        }
+        setIsDataFetched(false);
+      }
+    }, [medidasArandela, isDataFetched]);
 
   const onSubmit = handleSubmit( async (data) => {
     try {
@@ -39,12 +54,13 @@ function ArandelasPage() {
       setLoading(true);
       await getQueryArandela(data);
       setLoading(false);
-      setSuccessMessage('¡Consulta realizada con éxito!');
-      setErrorMessage(''); 
+      setIsDataFetched(true);
+      setErrorMessage('');
 
     } catch (error) {
       setLoading(false);
       setErrorMessage(error.message);
+      setNotFound('');
       setSuccessMessage('');
     }    
   });
@@ -100,6 +116,12 @@ function ArandelasPage() {
             {getQueryArandelasErrors.join(', ')}
           </div>
         )}
+
+          {notFound && (
+            <div className='bg-red-500 p-2 text-white text-center my-3'>
+              {notFound}
+            </div>
+          )}
 
 
         {successMessage && (
@@ -211,6 +233,12 @@ function ArandelasPage() {
             Resultado de la consulta
           </h1>
         </div>
+
+        {medidasArandela.length === 0 && !loading && isDataFetched && (
+        <div className='text-red-500 text-center my-3'>
+          Productos no encontrados
+         </div>
+         )}
 
         <div className="overflow-x-auto mt-2" style={{ boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)" }}>
           <table className="min-w-full bg-zinc-100 text-white mx-auto">

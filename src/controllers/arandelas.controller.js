@@ -45,9 +45,9 @@ export const getArandela = async (req, res, next) => {
     try {
         const arandelasFound = await arandelasdatos.find({
             $and: [
-                { W: { $gte: parseFloat(W) - 0.3, $lte: parseFloat(W) + 0.3 } },
-                { Dexterno: { $gte: parseFloat(Dexterno) - 0.5, $lte: parseFloat(Dexterno) + 0.5 } },
-                { Dinterno: { $gte: parseFloat(Dinterno) - 0.5, $lte: parseFloat(Dinterno) + 0.5 } },
+                { W: { $gte: parseFloat(W) - 1.0, $lte: parseFloat(W) + 1.0 } },
+                { Dexterno: { $gte: parseFloat(Dexterno) - 1.0, $lte: parseFloat(Dexterno) + 1.0 } },
+                { Dinterno: { $gte: parseFloat(Dinterno) - 1.0, $lte: parseFloat(Dinterno) + 1.0 } },
             ]
         });
 
@@ -57,10 +57,13 @@ export const getArandela = async (req, res, next) => {
                 result: arandelasFound
             });
         } else {
-            res.json({ success: false, message: "No se encontraron arandelas con las variables especificadas" });
+            res.json({ success: false, 
+                message: "No se encontraron arandelas con las variables especificadas",
+                result: arandelasFound
+            });
         }
     } catch (error) {
-        next(error);
+        res.status(500).json({ success: false, message: error.message });
     }
 };
 

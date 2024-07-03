@@ -60,7 +60,7 @@ function CreateOringPage() {
           </div>
         )}
 
-      <h1 className="  text-gray-800 text-2xl font-bold text-center">SUBIR DATOS PARA ORINGS</h1>
+      <h1 className="  text-gray-800 text-2xl font-bold text-center">SUBIR DATOS PARA O-RINGS</h1>
 
       <form onSubmit={onSubmit} >
 

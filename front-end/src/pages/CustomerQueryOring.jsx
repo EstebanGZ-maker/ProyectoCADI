@@ -11,6 +11,8 @@ function CustomerQueryOring() {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [calculatedValues, setCalculatedValues] = useState({ DI: '', DE: '', CS: '' });
+  const [notFound, setNotFound] = useState('');
+  const [isDataFetched, setIsDataFetched] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -21,6 +23,19 @@ function CustomerQueryOring() {
     await getQueryOring();
     setLoading(false);
   };
+
+    useEffect(() => {
+      if (isDataFetched) {
+        if (medidasOring.length === 0) {
+          setNotFound('No se hallaron O-rings con esas medidas');
+          setSuccessMessage('');
+        } else {
+          setSuccessMessage('¡Consulta realizada con éxito!');
+          setNotFound('');
+        }
+        setIsDataFetched(false);
+      }
+    }, [medidasOring, isDataFetched]);
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -38,13 +53,13 @@ function CustomerQueryOring() {
 
       setLoading(true);
       await getQueryOring(data);
-      setLoading(false);
-      setSuccessMessage('¡Consulta realizada con éxito!');
+      setIsDataFetched(true);
       setErrorMessage('');
 
     } catch (error) {
       setLoading(false);
       setErrorMessage(error.message);
+      setNotFound('');
       setSuccessMessage('');
     }
   });
@@ -101,6 +116,12 @@ function CustomerQueryOring() {
           </div>
           )
         }
+
+          {notFound && (
+          <div className='bg-red-500 p-2 text-white text-center my-3'>
+            {notFound}
+          </div>
+         )}
 
         {successMessage && (
           <div className='bg-green-700 p-2 text-white text-center my-3'>
@@ -222,28 +243,34 @@ function CustomerQueryOring() {
       </h1>
     </div>
 
+    {medidasOring.length === 0 && !loading && isDataFetched && (
+      <div className='text-red-500 text-center my-3'>
+        Productos no encontrados
+      </div>
+    )}
+
     <div className="overflow-x-auto mt-2 " style={{ boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)" }}>
       <table className="min-w-full bg-zinc-100 text-white mx-auto ">
         <thead>
           <tr className="bg-zinc-600">
             <th className="px-4 py-2">Descripción</th>
             <th className="px-4 py-2">Codigo</th>
-            <th className="px-4 py-2">Compuesto</th>
+           {/*  <th className="px-4 py-2">Compuesto</th> */}
             <th className="px-4 py-2">W m.m</th>
             <th className="px-4 py-2">I/D m.m</th>
             <th className="px-4 py-2">O/D m.m</th>
-            <th className="px-4 py-2">ID mold</th>
+            {/* <th className="px-4 py-2">ID mold</th>
             <th className="px-4 py-2">T Mold cm</th>
             <th className="px-4 py-2"># Cavidades</th>
             <th className="px-4 py-2"># Placas</th>
-            <th className="px-4 py-2">Patin</th>
+            <th className="px-4 py-2">Patin</th> */}
             <th className="px-4 py-2">Peso gr</th>
-            <th className="px-4 py-2">Precio P</th>
+            {/*<th className="px-4 py-2">Precio P</th>
             <th className="px-4 py-2">Tipo maquinas</th>
             <th className="px-4 py-2">Tipo molde</th>
             <th className="px-4 py-2">Tipo Proceso</th>
             <th className="px-4 py-2">Tipo distribución</th>
-            {/* <th className="px-4 py-2">Identificador DB</th> */}
+             <th className="px-4 py-2">Identificador DB</th> */}
           </tr>
         </thead>
       <tbody>
@@ -251,22 +278,22 @@ function CustomerQueryOring() {
           <tr key={i} className="bg-zinc-500">
             <td className="border px-4 py-2">{medida.DESCRIPCIÓN}</td>
             <td className="border px-4 py-2">{medida.ID}</td>
-            <td className="border px-4 py-2">{medida.CodigoCompu}</td>
-            <td className="border px-4 py-2">{medida.Espesor}</td>
-            <td className="border px-4 py-2">{medida.Dinterno}</td>
-            <td className="border px-4 py-2">{medida.Dexterno}</td>
-            <td className="border px-4 py-2">{medida.Idmolde}</td>
+           {/*  <td className="border px-4 py-2">{medida.CodigoCompu}</td> */}
+            <td className="border px-4 py-2 text-center ">{medida.Espesor}</td>
+            <td className="border px-4 py-2 text-center ">{medida.Dinterno}</td>
+            <td className="border px-4 py-2 text-center ">{medida.Dexterno}</td>
+            {/* <td className="border px-4 py-2">{medida.Idmolde}</td>
             <td className="border px-4 py-2">{medida.Mtamaño}</td>
             <td className="border px-4 py-2">{medida.Ncavidades}</td>
             <td className="border px-4 py-2">{medida.Nplacas}</td>
-            <td className="border px-4 py-2">{medida.Patin}</td>
-            <td className="border px-4 py-2">{medida.Pesogr}</td>
-            <td className="border px-4 py-2">{medida.PrecioProducir}</td>
+            <td className="border px-4 py-2">{medida.Patin}</td> */}
+            <td className="border px-4 py-2 text-center ">{medida.Pesogr}</td>
+            {/*<td className="border px-4 py-2">{medida.PrecioProducir}</td>
             <td className="border px-4 py-2">{medida.TMaquina}</td>
             <td className="border px-4 py-2">{medida.TMolde}</td>
             <td className="border px-4 py-2">{medida.TProceso}</td>
             <td className="border px-4 py-2">{medida.Tdistribucion}</td>
-            {/* <td className="border px-4 py-2">{medida._id}</td> */}
+             <td className="border px-4 py-2">{medida._id}</td> */}
           </tr>
         ))}
       </tbody>

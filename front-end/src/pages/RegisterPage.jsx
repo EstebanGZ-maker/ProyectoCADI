@@ -60,7 +60,7 @@ function RegisterPage() {
           style={{boxShadow:"0 4px 8px rgba(0, 0, 0, 0.2)", border: "1px solid black" }}
           >
           <option value="User">Usuario</option>
-          <option value="Admin">Administrador</option>
+          <option value="admin">Administrador</option>
         </select>
 
         <button type="submit" className=" w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-3 font-bold " >Registrar Usuario nuevo </button>      

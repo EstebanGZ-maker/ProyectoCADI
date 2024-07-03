@@ -77,7 +77,7 @@ function Navbar() {
                           </Link>
                         </li>
                         <li>
-                          <Link to={`/arandelasPage`} className='block px-4 py-2 text-gray-800 hover:bg-gray-200'>
+                          <Link to={`/queryArandela/query`} className='block px-4 py-2 text-gray-800 hover:bg-gray-200'>
                             - Buscar Arandelas
                           </Link>
                         </li>
@@ -97,7 +97,7 @@ function Navbar() {
                           </Link>
                         </li>
                         <li>
-                          <Link to={`/createArandelas`} className='block px-4 py-2 text-gray-800 hover:bg-gray-200'>
+                          <Link to={`/queryArandela`} className='block px-4 py-2 text-gray-800 hover:bg-gray-200'>
                             - Crear Arandelas
                           </Link>
                         </li>
