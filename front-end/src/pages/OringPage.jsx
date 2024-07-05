@@ -300,7 +300,6 @@ function QueryOringPage() {
     </table>
     </div>
 
-    Paginas 
     <ul className="flex justify-center mt-3">
     {Array(Math.ceil(medidasOring.length / itemsPerPage)).fill().map((_, i) => (
       <li key={i} className="cursor-pointer mx-1 bg-zinc-700 text-white px-3 py-1 rounded-md" onClick={() => paginate(i + 1)}>

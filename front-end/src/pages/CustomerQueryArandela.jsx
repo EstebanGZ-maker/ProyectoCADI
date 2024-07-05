@@ -265,7 +265,7 @@ function CustomerQueryArandela() {
             <tbody>
               {currentItems.map((medida, i) => (
                 <tr key={i} className="bg-zinc-500 ">
-                  <td className="border py-2">{medida.Description}</td>
+                  <td className="border px-4 py-2">{medida.Description}</td>
                   <td className="border px-4 py-2">{medida.ID}</td>
                   {/* <td className="border px-4 py-2">{medida.Compuesto}</td> */}
                   <td className="border px-4 py-2 text-center ">{medida.W}</td>
