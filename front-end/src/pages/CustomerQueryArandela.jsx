@@ -259,7 +259,10 @@ function CustomerQueryArandela() {
                 <th className="px-4 py-2">Linea</th>
                 <th className="px-4 py-2">Maquinas</th>
                 <th className="px-4 py-2">Tipo Proceso</th>
-                <th className="px-4 py-2">PDF</th> */}
+                <th className="px-4 py-2">PDF</th>
+                
+                por definir que dejar o no en la visualización del cliente
+                */}
               </tr>
             </thead>
             <tbody>
@@ -280,7 +283,11 @@ function CustomerQueryArandela() {
                   <td className="border px-4 py-2">{medida.Linea}</td>
                   <td className="border py-2">{medida.Tmaquina}</td>
                   <td className="border px-4 py-2">{medida.TProceso}</td>
-                  <td className="border py-2">{medida.PDF}</td> */}
+                  <td className="border py-2">{medida.PDF}</td>
+                  
+                  por definir que dejar o no en la visualización del cliente
+
+                  */}
                 </tr>
               ))}
             </tbody>

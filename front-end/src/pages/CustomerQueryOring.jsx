@@ -270,7 +270,11 @@ function CustomerQueryOring() {
             <th className="px-4 py-2">Tipo molde</th>
             <th className="px-4 py-2">Tipo Proceso</th>
             <th className="px-4 py-2">Tipo distribución</th>
-             <th className="px-4 py-2">Identificador DB</th> */}
+             <th className="px-4 py-2">Identificador DB</th> 
+             
+            por definir que dejar o no en la visualización del cliente
+
+             */}
           </tr>
         </thead>
       <tbody>
@@ -293,7 +297,11 @@ function CustomerQueryOring() {
             <td className="border px-4 py-2">{medida.TMolde}</td>
             <td className="border px-4 py-2">{medida.TProceso}</td>
             <td className="border px-4 py-2">{medida.Tdistribucion}</td>
-             <td className="border px-4 py-2">{medida._id}</td> */}
+             <td className="border px-4 py-2">{medida._id}</td> 
+
+             por definir que dejar o no en la visualización del cliente
+
+             */}
           </tr>
         ))}
       </tbody>

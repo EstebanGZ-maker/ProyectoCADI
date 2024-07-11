@@ -12,5 +12,3 @@ export const updateOringRequest = (queryOring) => axios.put(`/queryOring/${query
 export const deleteOringRequest = (id) => axios.delete(`/queryOring/${id}`); 
 
 
-/* Espesor, Dinterno, Dexterno */
-
