@@ -79,6 +79,6 @@ const OringsSchema = new mongoose.Schema({
 
 //Esto es para interactuar con la DB y los metodos. 
 //Aqui se cambia lo de la DB antes era Orings
-const OringModel = mongoose.model("OringsData", OringsSchema); 
+const OringModel = mongoose.model("OringsDatas", OringsSchema); 
 
 export default OringModel;
