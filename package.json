@@ -26,10 +26,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "start": "nodemon src/index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Esteban Garcia",
   "license": "ISC",
   "description": ""
 }
