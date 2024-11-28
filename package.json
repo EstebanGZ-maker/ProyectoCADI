@@ -27,9 +27,9 @@
   "type": "module",
   "scripts": {
     
-    
-    "build": "cd front-end && npm run build && cd .. && npm run build-backend"
-    
+    "start": "node src/index.js", 
+    "build": "cd front-end && npm run build && cd .. && npm run build-backend",
+    "start:prod": "npm run build && node src/index.js" 
   },
   "keywords": [],
   "author": "Esteban Garcia",
