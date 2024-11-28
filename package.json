@@ -28,7 +28,7 @@
   "scripts": {
     
     "start": "node src/index.js", 
-    "build": "cd front-end && npm run build", 
+    "build": "cd front-end && npm run build && cd .. && npm run build-backend",
     "start:prod": "npm run build && node src/index.js" 
   },
   "keywords": [],
