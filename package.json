@@ -26,7 +26,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon src/index.js"
+    
+    "start": "node src/index.js", 
+    "build": "cd front-end && npm run build", 
+    "start:prod": "npm run build && node src/index.js" 
   },
   "keywords": [],
   "author": "Esteban Garcia",
