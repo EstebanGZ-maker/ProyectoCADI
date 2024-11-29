@@ -27,7 +27,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Asume que la carpeta `dist` está dentro de `src`
-const frontendPath = path.join(__dirname, '../front-end/dist');
+const frontendPath = path.join(__dirname, './dist');
 
 // Servir archivos estáticos
 app.use(express.static(frontendPath));
