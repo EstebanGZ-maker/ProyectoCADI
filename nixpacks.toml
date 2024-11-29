@@ -1,4 +1,5 @@
 [phases]
-  [phases.build]
-  command = "npm ci --unsafe-perm=true && npm run build"
+  [phases.preInstall]
+  command = "npm ci --no-cache"
+
 
