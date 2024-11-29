@@ -25,7 +25,7 @@
   "type": "module",
  "scripts": {
   "start": "node index.js",
-  "build": " cd front-end && npm install --include=dev npm run build && cd .. && npm run build-backend",
+  "build": " cd front-end && npm ci --include=dev && npm run build && cd.. && npm ci && npm run build-backend",
   "build-backend": "node src/index.js"
 },
   "keywords": [],
