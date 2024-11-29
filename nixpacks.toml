@@ -1,4 +1,4 @@
 [phases]
-  [phases.preInstall]
-  command = "rm -rf node_modules/.cache || true"
+  [phases.build]
+  command = "npm ci --unsafe-perm=true && npm run build"
 
