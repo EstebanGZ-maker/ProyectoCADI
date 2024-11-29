@@ -1,19 +1,22 @@
 [phases]
   [phases.preInstall]
-  command = "cd  && rm -rf node_modules/.cache || true && npm install --no-cache"
+  command = "cd  && rm -rf node_modules && npm install"
 
   [phases.build]
   command = "cd  && npm run build"
 
   # Fase para el Frontend
   [phases.postInstall]
-  command = "cd frontend && rm -rf node_modules/.cache || true && npm install --no-cache"
+  command = "cd frontend && rm -rf node_modules && npm install"
 
   [phases.postBuild]
   command = "cd frontend && npm run build"
 
 [build]
 cache = false  # Deshabilitar cache global de Nixpacks
+
+nodeVersion = "18"  # O la versión que necesites
+
 
 
 
