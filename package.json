@@ -26,7 +26,7 @@
  "scripts": {
   "start": "node index.js",
   "build": " cd front-end && npm install --include=dev npm run build && cd .. && npm run build-backend",
-  "build-backend": "node backend/build.js"
+  "build-backend": "node src/index.js"
 },
   "keywords": [],
   "author": "Esteban Garcia",
