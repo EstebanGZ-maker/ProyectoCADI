@@ -16,7 +16,7 @@ const app = express();
 //Middlewares
 
 app.use(cors({
-    origin: `https://frontend-production-7986.up.railway.app`,
+    origin: `consultascadi.up.railway.app`,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true
 }));
