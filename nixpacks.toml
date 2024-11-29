@@ -1,6 +1,6 @@
 [phases]
   [phases.preInstall]
-  command = "rm -rf /app/node_modules/.cache || true && npm cache clean --force"
+  command = "rm -rf /app/node_modules && npm install --no-cache"
 
 [build]
 cache = false
