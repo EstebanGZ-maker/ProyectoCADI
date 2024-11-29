@@ -1,10 +1,10 @@
 [phases]
   # Fase para el Backend
   [phases.preInstall]
-  command = "cd backend && rm -rf node_modules/.cache || true && npm install"
+  command = "cd  && rm -rf node_modules/.cache || true && npm install"
 
   [phases.build]
-  command = "cd backend && npm run build"
+  command = "cd  && npm run build"
 
   # Fase para el Frontend
   [phases.postInstall]
