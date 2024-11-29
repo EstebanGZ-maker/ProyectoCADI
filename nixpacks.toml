@@ -1,5 +1,8 @@
 [phases]
   [phases.preInstall]
-  command = "rm -rf /app/node_modules/.cache"
+  command = RUN rm -rf /app/node_modules/.cache || true
+[build]
+cache = false
+
 
 
