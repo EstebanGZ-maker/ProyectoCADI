@@ -17,6 +17,7 @@ const app = express();
 
 app.use(cors({
     origin: `https://frontend-production-7986.up.railway.app`,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true
 }));
 app.use(morgan('dev')); 
