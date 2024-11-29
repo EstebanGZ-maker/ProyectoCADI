@@ -1,6 +1,7 @@
 [phases]
   [phases.preInstall]
   command = "rm -rf /app/node_modules/.cache || true"
+  command = "lsof +D /app/node_modules/.cache && kill $(lsof +D /app/node_modules/.cache -t) || true"
 
 [build]
 cache = false
