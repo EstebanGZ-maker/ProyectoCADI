@@ -1,9 +1,19 @@
 [phases]
+  # Fase para el Backend
   [phases.preInstall]
-  command = "chmod -R 777 /app/node_modules && rm -rf /app/node_modules/.cache || true"
+  command = "cd backend && rm -rf node_modules/.cache || true && npm install"
+
+  [phases.build]
+  command = "cd backend && npm run build"
+
+  # Fase para el Frontend
+  [phases.postInstall]
+  command = "cd frontend && rm -rf node_modules/.cache || true && npm install"
+
+  [phases.postBuild]
+  command = "cd frontend && npm run build"
 
 [build]
-cache = false
-
+cache = false  # Deshabilitar el cache general
 
 
