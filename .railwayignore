@@ -1,8 +1,4 @@
 node_modules
-dist
-.vscode
-*.log
-coverage
-.DS_Store
+front-end/node_modules
+.git
 .env
-*.test.*

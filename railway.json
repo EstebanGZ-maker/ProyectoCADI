@@ -1,12 +1,15 @@
 {
     "build": {
-      "commands": {
-        "frontend": "cd front-end && npm ci && npm run build",
-        "backend": "cd  && npm ci"
+      "builder": "NIXPACKS",
+      "nixpacks": {
+        "phases": {
+          "install": "npm ci",
+          "build": "npm run build"
+        }
       }
     },
-    "start": {
-      "command": "node src/index.js"
+    "deploy": {
+      "startCommand": "npm run start"
     }
   }
   

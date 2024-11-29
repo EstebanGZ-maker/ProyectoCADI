@@ -25,8 +25,9 @@
   "type": "module",
  "scripts": {
   "start": "node index.js",
-  "build": " cd front-end && npm ci --include=dev && npm run build && cd .. && npm ci && npm run build-backend",
-  "build-backend": "node src/index.js"
+  "build": "npm run build-frontend && npm run build-backend",
+  "build-frontend": "cd front-end && npm ci && npm run build",
+  "build-backend": "npm ci"
 },
   "keywords": [],
   "author": "Esteban Garcia",
