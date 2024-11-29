@@ -1,3 +1,0 @@
-[phases]
-  [phases.preInstall]
-  command = "rm -rf node_modules/.cache && npm install --no-cache"
