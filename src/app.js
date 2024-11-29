@@ -16,7 +16,7 @@ const app = express();
 //Middlewares
 
 app.use(cors({
-    origin: `http://localhost:5173`,
+    origin: `https://frontend-production-7986.up.railway.app`,
     credentials: true
 }));
 app.use(morgan('dev')); 
