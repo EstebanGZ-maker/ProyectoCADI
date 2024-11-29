@@ -1,5 +1,5 @@
 [phases]
   [phases.preInstall]
-  command = "npm ci --no-cache"
+  command = "rm -rf /app/node_modules/.cache"
 
 
