@@ -26,7 +26,7 @@
  "scripts": {
   "start": "node index.js",
   "build": "npm run build-frontend && npm run build-backend",
-  "build-frontend": "cd front-end && npm ci && npm run build",
+  "build-frontend": "cd front-end && npm ci && npm run build && cd .. ",
   "build-backend": "npm ci"
 },
   "keywords": [],
