@@ -1,10 +1,8 @@
 [phases]
   [phases.preInstall]
-  command = "rm -rf /app/node_modules/.cache || true"
-  command = "lsof +D /app/node_modules/.cache && kill $(lsof +D /app/node_modules/.cache -t) || true"
+  command = "rm -rf /app/node_modules/.cache || true && npm cache clean --force"
 
 [build]
 cache = false
-
 
 
