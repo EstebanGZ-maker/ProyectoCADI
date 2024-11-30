@@ -1,15 +1,41 @@
-{
-    "build": {
-      "builder": "NIXPACKS",
-      "nixpacks": {
-        "phases": {
-          "install": "npm ci",
-          "build": "npm run build"
+
+  {
+    "services": [
+      {
+        "name": "backend",
+        "path": "./src", 
+        "build": {
+          "builder": "NIXPACKS",
+          "nixpacks": {
+            "phases": {
+              "install": "npm ci",
+              "build": "npm run build"
+            }
+          }
+        },
+        "deploy": {
+          "startCommand": "npm run start"
+        }
+      },
+      {
+        "name": "frontend",
+        "path": "cd front-end ", 
+        "build": {
+          "builder": "NIXPACKS",
+          "nixpacks": {
+            "phases": {
+              "install": "npm ci",
+              "build": "npm run build"
+            }
+          }
+        },
+        "deploy": {
+          "startCommand": "npm run start"
+        },
+        "envs": {
+          "VITE_BACKEND_URL": "https://backend-production-252a.up.railway.app"
         }
       }
-    },
-    "deploy": {
-      "startCommand": "npm run start"
-    }
+    ]
   }
   
