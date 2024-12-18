@@ -26,7 +26,7 @@ function QueryOringPage() {
 
   useEffect(() => {
     if (isDataFetched) {
-      if (medidasOring.length === 0) {
+      if ( medidasOring.length === 0  /* !medidasOring || medidasOring.length === 0 */) {
         setNotFound('No se hallaron O-rings con esas medidas');
         setSuccessMessage('');
       } else {
@@ -53,6 +53,7 @@ function QueryOringPage() {
 
       setLoading(true);
       await getQueryOring(data);
+      console.log(data, "data en oring paga")
       setLoading(false);
       setIsDataFetched(true);
       setErrorMessage('');
@@ -269,21 +270,21 @@ function QueryOringPage() {
             <th className="px-4 py-2">Tipo maquinas</th>
             <th className="px-4 py-2">Tipo molde</th>
             <th className="px-4 py-2">Tipo Proceso</th>
-            <th className="px-4 py-2">Tipo distribución</th>
+            {/* <th className="px-4 py-2">Tipo distribución</th> */}
             {/* <th className="px-4 py-2">Identificador DB</th> */}
           </tr>
         </thead>
       <tbody>
         {currentItems.map((medida, i) => (  
           <tr key={i} className="bg-zinc-500">
-            <td className="border px-4 py-2">{medida.DESCRIPCIÓN}</td>
+            <td className="border px-4 py-2">{medida.DESCRIPCIÓ}</td>
             <td className="border px-4 py-2">{medida.ID}</td>
             <td className="border px-4 py-2">{medida.CodigoCompu}</td>
             <td className="border px-4 py-2">{medida.Espesor}</td>
             <td className="border px-4 py-2">{medida.Dinterno}</td>
             <td className="border px-4 py-2">{medida.Dexterno}</td>
             <td className="border px-4 py-2">{medida.Idmolde}</td>
-            <td className="border px-4 py-2">{medida.Mtamaño}</td>
+            <td className="border px-4 py-2">{medida.Mtamañ}</td>
             <td className="border px-4 py-2">{medida.Ncavidades}</td>
             <td className="border px-4 py-2">{medida.Nplacas}</td>
             <td className="border px-4 py-2">{medida.Patin}</td>
@@ -292,7 +293,7 @@ function QueryOringPage() {
             <td className="border px-4 py-2">{medida.TMaquina}</td>
             <td className="border px-4 py-2">{medida.TMolde}</td>
             <td className="border px-4 py-2">{medida.TProceso}</td>
-            <td className="border px-4 py-2">{medida.Tdistribucion}</td>
+            {/* <td className="border px-4 py-2">{medida.Tdistribucion}</td> */}
             {/* <td className="border px-4 py-2">{medida._id}</td> */}
           </tr>
         ))}

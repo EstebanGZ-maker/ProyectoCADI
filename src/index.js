@@ -9,7 +9,7 @@ dotenv.config()
 app.listen( process.env.PORT || 4000);
 console.log('Server on port: ',process.env.PORT || 4000); 
 connectDB();   */
-
+ 
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -33,7 +33,7 @@ const frontendPath = path.join(__dirname, './dist');
 app.use(express.static(frontendPath));
 
 // Ruta fallback para manejar el frontend (Single Page Application)
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
   res.sendFile(path.join(frontendPath, 'index.html'));
 });
 
@@ -42,4 +42,4 @@ const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Server on port: ${PORT}`);
 });
-
+ 

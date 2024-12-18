@@ -47,26 +47,26 @@ export const getQueryOrings = async ( res) => {
 
 //Obtener un oring dependiendo las medidas solicitadas
 export const getQueryOring = async (req, res) => {
-    
+
     const {Espesor, Dexterno, Dinterno} = req.query; 
+    console.log("Parámetros recibidos:", req.query);
 
     try {
         
         const oringFound = await OringsData.find({ 
-        $and: [
-            {Espesor: { $gte: parseFloat(Espesor) - 1.0, $lte: parseFloat(Espesor) + 1.0 }},
-            {Dexterno: { $gte: parseFloat(Dexterno) - 1.0, $lte: parseFloat(Dexterno) + 1.0 }},
-            {Dinterno: { $gte: parseFloat(Dinterno) - 1.0, $lte: parseFloat(Dinterno) + 1.0 }},
+            
+        $and: [ 
+            {Espesor: { $gte: parseFloat(Espesor) - 2.0, $lte: parseFloat(Espesor) + 2.0}},
+            {Dexterno: { $gte: parseFloat(Dexterno) - 2.0, $lte: parseFloat(Dexterno) + 2.0 }},
+            {Dinterno: { $gte: parseFloat(Dinterno) - 2.0, $lte: parseFloat(Dinterno) + 2.0 }},
             // posibles parametros 
-            //{codigoCompuesto: codigoCompuesto},
         ] 
              
       }); 
       //Lo que va responder 
       if (oringFound.length > 0) {
         
-        console.log(oringFound); 
-        // Sangría corregida: Todas las propiedades dentro del objeto de respuesta se incluyen aquí
+         
         return res.status(200).json({
           message: "Producto consultado exitosamente",
           result: oringFound,

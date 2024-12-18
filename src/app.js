@@ -16,10 +16,11 @@ const app = express();
 //Middlewares
 
 app.use(cors({
-    origin: `consultascadi.up.railway.app`,
+    origin: ['https://consultascadi.up.railway.app', 'http://localhost:5173'], // URLs permitidas
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true
+    credentials: true // Permite cookies/sesiones
 }));
+
 app.use(morgan('dev')); 
 app.use(express.json());
 app.use(cookieParser());

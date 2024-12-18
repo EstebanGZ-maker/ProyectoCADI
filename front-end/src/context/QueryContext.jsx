@@ -81,4 +81,3 @@ export const QueryOringProvider = ({children}) => {
         </ QueryOringContext.Provider>
     )
 }
-
