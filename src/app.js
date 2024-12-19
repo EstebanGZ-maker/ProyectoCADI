@@ -16,8 +16,9 @@ const app = express();
 //Middlewares
 
 app.use(cors({
-    origin: ['https://consultascadi.up.railway.app', 'http://localhost:5173'], // URLs permitidas
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    origin: [process.env.CLIENT_URL, 'http://localhost:5173'], // URLs permitidas
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true // Permite cookies/sesiones
 }));
 

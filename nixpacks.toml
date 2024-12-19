@@ -17,7 +17,15 @@ cache = false  # Deshabilitar cache global de Nixpacks
 
 nodeVersion = "18"  # O la versión que necesites
 
+[[services]]
+name = "frontend"
+http_port = 5173
+source = "cd frontend"
 
+[[services]]
+name = "backend"
+http_port = 4000
+source = "src"
 
 
 
