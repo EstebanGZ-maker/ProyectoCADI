@@ -2,7 +2,7 @@ import axios from "./axios.js";
 
 export const  getOringsRequest =  (medidasOring) => {
  
-        return axios.get(`/queryOring/query`, { params: medidasOring });  
+        return axios.get(`/api/queryOring/query`, { params: medidasOring });  
     }; 
 
 export const createOringsRequest = (queryOring) => axios.post(`/queryOring`, queryOring); 
